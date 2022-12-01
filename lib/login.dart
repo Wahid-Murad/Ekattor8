@@ -1,4 +1,4 @@
-import 'package:ekattor_8/constrain/constants.dart';
+import 'package:ekattor_8/routine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -173,12 +173,11 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.black45,
                              blurRadius: 1,
                             offset: Offset(0, 0),
-    ),
-  ],
+                          ),
+                       ],
                         ),
                         height: 50,
                         child: TextField(
-                          obscureText: true,
                           keyboardType: TextInputType.emailAddress,
                           style: GoogleFonts.roboto(),
                           decoration: InputDecoration(
@@ -265,22 +264,26 @@ class _LoginPageState extends State<LoginPage> {
                          ],
                         ),
                        ),
-                       Container(
-                        margin: EdgeInsets.only(top: 25),
-                        width: 400,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.blue, 
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10,bottom: 10,),
-                          child: Center(child: Text("Login",style: GoogleFonts.roboto(fontSize: 16,color: Colors.white),)),
-                        ),
+                       InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RoutinePage()));
+                        },
+                         child: Container(
+                          margin: EdgeInsets.only(top: 25),
+                          width: 400,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.blue, 
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10,bottom: 10,),
+                            child: Center(child: Text("Login",style: GoogleFonts.roboto(fontSize: 16,color: Colors.white),
+                            ),
+                            ),
+                          ),
+                         ),
                        ),
-                      
-               
-
                       ],
                     ),
                   ],
