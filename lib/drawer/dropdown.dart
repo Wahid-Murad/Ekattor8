@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class DropDiwn extends StatefulWidget {
-  const DropDiwn({super.key});
+class DropDown extends StatefulWidget {
+  const DropDown({super.key});
 
   @override
-  State<DropDiwn> createState() => _DropDiwnState();
+  State<DropDown> createState() => _DropDownState();
 }
 
-class _DropDiwnState extends State<DropDiwn> {
-
+class _DropDownState extends State<DropDown> {
   TextEditingController controller=TextEditingController();
+
    List<String> dayList=[
     "Saturday",
     "Sunday",
@@ -23,6 +23,7 @@ class _DropDiwnState extends State<DropDiwn> {
     ];
 
     bool displayDayList=false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +45,7 @@ class _DropDiwnState extends State<DropDiwn> {
                hintStyle: TextStyle(fontSize: 18,color: Colors.white),
                suffixIcon: InkWell(
                 onTap: (){
-                  setState(() {
+                    setState(() {
                     displayDayList=!displayDayList;
                   });
                 },

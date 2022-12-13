@@ -1,4 +1,4 @@
-import 'package:ekattor_8/login.dart';
+import 'package:ekattor_8/screen/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -39,7 +39,7 @@ class DemoDrawer extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.center+Alignment(0, 0.2),
-                    child: Text("      University of Michigan",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),),
+                    child: Text("University of Michigan",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),),
                   ),
                 ],
               ),

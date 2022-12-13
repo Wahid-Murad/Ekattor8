@@ -43,6 +43,8 @@ dependencies:
   connectivity_plus: ^2.3.8
   fluttertoast: ^8.0.9
   shared_preferences: ^2.0.15
+  splash_screen_view: ^3.0.0
+  dotted_border: ^2.0.0+3 
 
 dev_dependencies:
   flutter_test:
