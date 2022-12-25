@@ -15,6 +15,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
 
   bool _rememberMe=false;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                Row(
                 children: [
                  Padding(
-                   padding: const EdgeInsets.only(left: 20,right: 20),
+                   padding: const EdgeInsets.only(left: 18,right: 18),
                    child: InkWell(
                     onTap: (){
 
@@ -879,7 +880,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                  ),
                               ),
-
+                              
             ],
           ),
         ),

@@ -11,7 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+   LoginPage({super.key});
+   
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -19,12 +20,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   List <UserModel> userList=[];
   late UserModel userModel;
-  bool _rememberMe=false;
   String ? token;
+  bool _rememberMe=false;
   SharedPreferences ? sharedPreferences;
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
-  String Link="https://demo.creativeitem.com/test/Ekattor8/api/auth/login";
+  String Link="https://demo.creativeitem.com/test/Ekattor8/api/login";
 
   getLogin() async{
     sharedPreferences=await SharedPreferences.getInstance();
@@ -53,12 +54,13 @@ class _LoginPageState extends State<LoginPage> {
   isLogin()async{
     sharedPreferences=await SharedPreferences.getInstance();
     token= sharedPreferences!.getString("access_token");
-    if(token!.isNotEmpty){
-      Fluttertoast.showToast(msg: "Already Logged In");
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>ProfilePage()));
+    if(token==null){
+      print("Token is Null");
+      
     }
     else{
-      print("Token is Null");
+    Fluttertoast.showToast(msg: "Already Logged In");
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>ProfilePage())); 
     }
   }
 
@@ -239,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                            InkWell(
                             onTap: (){
                               getLogin();
-                              //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfilePage()));
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfilePage()));
                             },
                              child: Container(
                               margin: EdgeInsets.only(top: 25),
