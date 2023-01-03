@@ -24,7 +24,7 @@ class _RoutinePageState extends State<RoutinePage> {
           children: [
             TopBar(),
              Padding(
-               padding: const EdgeInsets.only(top: 10,left: 20,right: 10),
+               padding: const EdgeInsets.only(top: 10,left: 10,right: 10),
                child: Row(
                  children: [             
                      Stack(
@@ -133,7 +133,7 @@ class _RoutinePageState extends State<RoutinePage> {
                                   Text("9-10 am",style: GoogleFonts.robotoSerif(),),
                             ],
                           ),
-              //                         DottedLine(
+              //      DottedLine(
               //       direction: Axis.vertical,
               //   lineLength: 3,
               //   lineThickness: 1.0,

@@ -20,7 +20,11 @@ class TopBar extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: Icon(Icons.arrow_back,color: Colors.white,),
+              child: InkWell(
+                onTap: (){
+                  Navigator.of(context).pop();
+                },
+                child: Icon(Icons.arrow_back,color: Colors.white,)),
             ),
             Align(
               alignment: Alignment.center,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:ekattor_8/consts/drawer.dart';
 import 'package:ekattor_8/model/user_details_model.dart';
 import 'package:ekattor_8/screen/login.dart';
 import 'package:ekattor_8/topbar/custom_shape.dart';
@@ -19,16 +20,19 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  GlobalKey<ScaffoldState> _scaffoldKey=GlobalKey<ScaffoldState>();
   var user;
   bool _rememberMe=false;
   SharedPreferences ? sharedPreferences;
 
-  Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove('access_token');
-    prefs.clear();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
-  }
+  // Future<void> logout() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   prefs.remove('access_token');
+  //   prefs.clear();
+  //   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+  // }
+
 List <UserDetailsModel> userData=[];
   fetchUser() async {
     sharedPreferences=await SharedPreferences.getInstance();
@@ -109,6 +113,7 @@ List <UserDetailsModel> userData=[];
           userData.add(userDetailsModel);
         });
     }
+    
     //  else {
     //   throw Exception('Failed to load...');
     // }
@@ -118,14 +123,14 @@ List <UserDetailsModel> userData=[];
   @override
   void initState() {
     fetchUser();
-
-    // TODO: implement initState
     super.initState();
   }  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
+        drawer: DemoDrawer(),
         body: Container(
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
@@ -153,14 +158,17 @@ List <UserDetailsModel> userData=[];
                            ],
                          ),
                   ),
-                      //  Positioned(
-                      //    left: 0,
-                      //    bottom: 10,
-                      //    child: IconButton(
-                      //      onPressed: fetchUser,
-                      //      icon: const Icon(Icons.logout),
-                      //    ),
-                      //  ),
+
+                      Positioned(
+                        left: 60,
+                        top: 20,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: IconButton(onPressed: (){
+                            _scaffoldKey.currentState!.openDrawer();
+                          }, 
+                          icon: Icon(Icons.menu,color: Colors.white,),),),
+                       ),
                  
                        Positioned(
                         left: 150,
@@ -184,10 +192,10 @@ List <UserDetailsModel> userData=[];
                                     ),
                    Positioned(
                     top: 225,
-                    left: 100,
+                    left: 140,
                      child: Padding(
                        padding: const EdgeInsets.only(left: 35,top: 3),
-                       child: Text("University of Bangladesh",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w300,),),
+                       child: Text("${user['class_name']}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w300,),),
                      ),
                    ),
                      ],
@@ -219,7 +227,7 @@ List <UserDetailsModel> userData=[];
                        padding: const EdgeInsets.only(left: 18,right: 18),
                        child: InkWell(
                         onTap: (){
-                
+                         
                         },
                          child: Text("Upload File",style: GoogleFonts.roboto(fontSize: 16,fontWeight: FontWeight.w600),
                          ),
@@ -630,9 +638,7 @@ List <UserDetailsModel> userData=[];
                                     ),
                                   ),
                                  ),
-                               ),
-                
-                       
+                               ),                    
                 
                                  Padding(
                                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 15),
@@ -734,11 +740,13 @@ List <UserDetailsModel> userData=[];
                                ),
                 
                                 Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text("Address Line 2",style: GoogleFonts.roboto(fontSize: 16,fontWeight: FontWeight.w700,),),
-                      )),
+                           alignment: Alignment.centerLeft,
+                           child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                           child: Text("Address Line 2",style: GoogleFonts.roboto(fontSize: 16,fontWeight: FontWeight.w700,),
+                           ),
+                      ),
+                      ),
                                SizedBox(
                                 height: 15,
                                ),

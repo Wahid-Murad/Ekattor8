@@ -1,4 +1,5 @@
 import 'package:ekattor_8/screen/login.dart';
+import 'package:ekattor_8/screen/routine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -93,7 +94,7 @@ class DemoDrawer extends StatelessWidget {
             ),
             ListTile(
               onTap: (){
-                
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RoutinePage()));
               },
              leading: Icon(Icons.person),
              title: Text("Routine") ,  
@@ -150,17 +151,22 @@ class DemoDrawer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.blue,
                 ),
-                child: Row(
-                  children: [
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+                  },
+                  child: Row(
+                    children: [
+                      Padding(
+                      padding: const EdgeInsets.only(bottom: 10,left: 20,top: 10),
+                      child: Icon(Icons.logout,size: 18,color: Colors.white,),
+                    ),
                     Padding(
-                    padding: const EdgeInsets.only(bottom: 10,left: 20,top: 10),
-                    child: Icon(Icons.logout,size: 18,color: Colors.white,),
+                      padding:  EdgeInsets.only(bottom: 10,left: 10,top: 10),
+                      child: Text("Log out",style: GoogleFonts.roboto(fontSize: 15,color: Colors.white),),
+                    ),
+                    ],
                   ),
-                  Padding(
-                    padding:  EdgeInsets.only(bottom: 10,left: 10,top: 10),
-                    child: Text("Log out",style: GoogleFonts.roboto(fontSize: 15,color: Colors.white),),
-                  ),
-                  ],
                 ),
               ),
             ),
