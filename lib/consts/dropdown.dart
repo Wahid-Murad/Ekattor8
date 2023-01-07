@@ -29,60 +29,7 @@ class _AppDropDownState extends State<AppDropDown> {
     'Friday',
   ];
   String ? selectedValue;
-  var routine;
-  SharedPreferences ? sharedPreferences;
 
-  List <RoutineModel> routineData=[];
-  List <Routine> routineDataDemo=[];
-
-  fetchRoutine() async {
-     sharedPreferences=await SharedPreferences.getInstance();
-     dynamic token = sharedPreferences!.getString("access_token");
-
-     print(token);
-
-    var url = "https://demo.creativeitem.com/test/Ekattor8/api/routine";
-
-     final response = await http.post(Uri.parse(url), headers: {
-       'Content-Type': 'application/json',
-       'Accept': 'application/json',
-       'Authorization': 'Bearer $token',
-     });
-
-     if (response.statusCode == 201) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      print(response.body);
-      routine = jsonDecode(response.body);
-      RoutineModel routineModel = RoutineModel(
-          classId: routine["class_id"],
-          className: routine["class_name"],
-          sectionId: routine["section_id"],
-          sectionName: routine["section_name"],
-          schoolId: routine["school_id"],
-          sessionId: routine["session_id"]
-      );
-            setState(() {
-          routineData.add(routineModel);
-        });
-
-       for( var data in routine["routines"]){ //for in loop
-         Routine routinedemo = Routine(
-         id: data["id"],
-         subjectId: data["subject_id"],
-         subjectName: data["subject_name"],
-         startingTime: data["starting_time"],
-         endingTime: data["ending_time"],
-         day: data["day"],
-         teacherId: data["teacher_id"],
-         teacherName: data["teacher_name"]
-       );
-             setState(() {
-          routineDataDemo.add(routinedemo);
-        });
-       }
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(

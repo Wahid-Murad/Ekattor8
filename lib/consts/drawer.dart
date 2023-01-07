@@ -1,13 +1,95 @@
+import 'dart:convert';
+
+import 'package:ekattor_8/model/user_details_model.dart';
 import 'package:ekattor_8/screen/login.dart';
 import 'package:ekattor_8/screen/routine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-class DemoDrawer extends StatelessWidget {
+class DemoDrawer extends StatefulWidget {
   const DemoDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<DemoDrawer> createState() => _DemoDrawerState();
+}
+
+class _DemoDrawerState extends State<DemoDrawer> {
+
+  GlobalKey<ScaffoldState> _scaffoldKey=GlobalKey<ScaffoldState>();
+  var user;
+  bool _rememberMe=false;
+  SharedPreferences ? sharedPreferences;
+
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('access_token');
+    prefs.clear();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+  }
+
+List <UserDetailsModel> userData=[];
+  fetchUser() async {
+    sharedPreferences=await SharedPreferences.getInstance();
+    dynamic token = sharedPreferences!.getString("access_token");
+
+    print(token);
+
+    var url = "https://demo.creativeitem.com/test/Ekattor8/api/user_details";
+
+    final response = await http.post(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
+    if (response.statusCode == 201) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      print(response.body);
+      user = jsonDecode(response.body);
+
+         UserDetailsModel userDetailsModel = UserDetailsModel(
+          id: user["id"],
+          userId: user["user_id"],
+          classId: user["class_id"],
+          sectionId: user["section_id"],
+          schoolId: user["school_id"],
+          departmentId: user["department_id"],
+          sessionId: user["session_id"],
+          code: user["code"],
+          parentName: user["parent_name"],
+          name: user["name"],
+          email: user["email"],
+          role: user["role"],
+          address: user["address"],
+          phone: user["phone"],
+          birthday: user["birthday"],
+          gender: user["gender"],
+          bloodGroup: user["blood_group"],
+          photo: user["photo"],
+          runningSession: user["running_session"],
+          className: user["class_name"],
+          sectionName: user["section_name"]
+        );
+        setState(() {
+          userData.add(userDetailsModel);
+        });
+    }
+    
+    
+
+
+  }
+  @override
+  void initState() {
+    fetchUser();
+    super.initState();
+  }  
+  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -97,7 +179,7 @@ class DemoDrawer extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RoutinePage()));
               },
              leading: Icon(Icons.person),
-             title: Text("Routine") ,  
+             title: Text("Routine"),  
             ),
             ListTile(
               onTap: (){
@@ -153,7 +235,8 @@ class DemoDrawer extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+                    logout();
                   },
                   child: Row(
                     children: [
