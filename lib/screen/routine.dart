@@ -11,7 +11,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
 class RoutinePage extends StatefulWidget {
   const RoutinePage({super.key});
 
@@ -20,27 +19,27 @@ class RoutinePage extends StatefulWidget {
 }
 
 class _RoutinePageState extends State<RoutinePage> {
-    var routine;
-  SharedPreferences ? sharedPreferences;
+  var routine;
+  SharedPreferences? sharedPreferences;
 
-  List <RoutineModel> routineData=[];
-  List <Routine> routineDataDemo=[];
+  List<RoutineModel> routineData = [];
+  List<Routine> routineDataDemo = [];
 
   fetchRoutine() async {
-     sharedPreferences=await SharedPreferences.getInstance();
-     dynamic token = sharedPreferences!.getString("access_token");
+    sharedPreferences = await SharedPreferences.getInstance();
+    dynamic token = sharedPreferences!.getString("access_token");
 
-     print(token);
+    print(token);
 
     var url = "https://demo.creativeitem.com/test/Ekattor8/api/routine";
 
-     final response = await http.post(Uri.parse(url), headers: {
-       'Content-Type': 'application/json',
-       'Accept': 'application/json',
-       'Authorization': 'Bearer $token',
-     });
+    final response = await http.post(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
 
-     if (response.statusCode == 201) {
+    if (response.statusCode == 201) {
       print(response.body);
       routine = jsonDecode(response.body);
       RoutineModel routineModel = RoutineModel(
@@ -49,109 +48,256 @@ class _RoutinePageState extends State<RoutinePage> {
           sectionId: routine["section_id"],
           sectionName: routine["section_name"],
           schoolId: routine["school_id"],
-          sessionId: routine["session_id"]
-      );
-            setState(() {
-          routineData.add(routineModel);
-        });
+          sessionId: routine["session_id"]);
+      setState(() {
+        routineData.add(routineModel);
+      });
 
-       for( var data in routine["routines"]){ //for in loop
-         Routine routinedemo = Routine(
-         id: data["id"],
-         subjectId: data["subject_id"],
-         subjectName: data["subject_name"],
-         startingTime: data["starting_time"],
-         endingTime: data["ending_time"],
-         day: data["day"],
-         teacherId: data["teacher_id"],
-         teacherName: data["teacher_name"]
-       );
-             setState(() {
+      for (var data in routine["routines"]) {
+        //for in loop
+        Routine routinedemo = Routine(
+            id: data["id"],
+            subjectId: data["subject_id"],
+            subjectName: data["subject_name"],
+            startingTime: data["starting_time"],
+            endingTime: data["ending_time"],
+            day: data["day"],
+            teacherId: data["teacher_id"],
+            teacherName: data["teacher_name"]);
+        setState(() {
           routineDataDemo.add(routinedemo);
         });
-       }
+      }
     }
   }
 
+  @override
+  void initState() {
+    fetchRoutine();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-     body: Column(
-          children: [
-            TopBar(),
-             Padding(
-               padding: const EdgeInsets.only(top: 10,left: 10,right: 10),
-               child: Row(
-                 children: [             
-                     Stack(
-                       children: [
-                         Padding(
-                              padding: const EdgeInsets.only(left: 250),
-                              child: AppDropDown(),
-                               ), 
-                         Positioned(
-                          left: 10,
-                           child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(7),
-                                         boxShadow: [
-                                          BoxShadow(
-                                          color: Colors.black45,
-                                           blurRadius: 0.1,
-                                          offset: Offset(0, 0),
-                                        ),
-                                     ],
-                                      ),
-                                      width: 220,
-                                      height: 50,
-                                      child: TextField(
-                                        keyboardType: TextInputType.text,
-                                        style: GoogleFonts.roboto(),
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(top: 15),
-                                          prefixIcon: Icon(Icons.search,color: Colors.black38,size: 20,),
-                                          hintText: "Search",
-                                          hintStyle: GoogleFonts.roboto(fontSize: 14,),
-                                        ),
-                                      ), 
-                                     ),
-                         ),
-                       ],
-                     ),
-                                                                               
-                 ],
-               ),
-             ),
-                  
-                    Container(
-                  height: 400,
-                  width: double.infinity,
-                 child: ListView.builder(
-            itemCount: routineData.length,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) { 
-                   return Container(
-                    color: Colors.black,
-                    width: 200,
-                    height: 100,
-                    child: Column(
-                      children: [
-                       Text("Hello "),
-                      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          TopBar(),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            child: Row(
+              children: [
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 250),
+                      child: AppDropDown(),
                     ),
-                   );
-                      },
+                    Positioned(
+                      left: 10,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(7),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black45,
+                              blurRadius: 0.1,
+                              offset: Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                        width: 220,
+                        height: 50,
+                        child: TextField(
+                          keyboardType: TextInputType.text,
+                          style: GoogleFonts.roboto(),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(top: 15),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.black38,
+                              size: 20,
+                            ),
+                            hintText: "Search",
+                            hintStyle: GoogleFonts.roboto(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                ), 
-          ],
-        ),
-       
+              ],
+            ),
+          ),
+          //Text(routineDataDemo.length.toString()),
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            child: ListView.builder(
+              itemCount: routineDataDemo.length,
+              shrinkWrap: true,
+              //scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Container(
+                      height: 130,
+                      child: GridView(
+                        children: [
+                          Container(
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  'images/pic1.PNG',
+                                  width: double.infinity,
+                                  height: 55,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 6),
+                                  child: Text(
+                                    "${routineDataDemo[index].teacherName}",
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 4, bottom: 5),
+                                  child: Text(
+                                    "Teacher",
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: Divider(
+                                    height: 10,
+                                    thickness: 0.5,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 50, top: 10),
+                                        child: Icon(
+                                          Icons.circle_outlined,
+                                          size: 12,
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Center(
+                                        child: Text(
+                                      "${routineDataDemo[index].subjectName}",
+                                      style: GoogleFonts.robotoSerif(),
+                                    )),
+                                  ],
+                                ),
+                                Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 52),
+                                      child: Image.asset(
+                                        'images/dote.png',
+                                        height: 12,
+                                      ),
+                                    )),
+
+                                Row(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 50,
+                                        ),
+                                        child: Icon(
+                                          Icons.circle_outlined,
+                                          size: 12,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${routineDataDemo[index].startingTime} am",
+                                      style: GoogleFonts.robotoSerif(),
+                                    ),
+                                  ],
+                                ),
+
+                                Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 52),
+                                      child: Image.asset(
+                                        'images/dote.png',
+                                        height: 12,
+                                      ),
+                                    )),
+
+                                Row(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 50,
+                                        ),
+                                        child: Icon(
+                                          Icons.circle_outlined,
+                                          size: 12,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${routineDataDemo[index].day}",
+                                      style: GoogleFonts.robotoSerif(),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            color: Colors.white,
+                          ),
+
+                         
+                        ],
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisExtent: 200,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
-
-              
