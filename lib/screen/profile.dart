@@ -175,7 +175,8 @@ List <UserDetailsModel> userData=[];
                         top: 95,
                         child: Align(
                           alignment: Alignment.topCenter,
-                          child: Image.network('${user['photo']}',height: 97,width: 97,)),
+                          child: Image.network('${user['photo']}',height: 97,width: 97,),
+                          ),
                        ),
                        Positioned(
                         left: 190,

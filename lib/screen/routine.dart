@@ -95,34 +95,36 @@ class _RoutinePageState extends State<RoutinePage> {
                     ),
                     Positioned(
                       left: 10,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(7),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black45,
-                              blurRadius: 0.1,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                        width: 220,
-                        height: 50,
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          style: GoogleFonts.roboto(),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(top: 15),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.black38,
-                              size: 20,
-                            ),
-                            hintText: "Search",
-                            hintStyle: GoogleFonts.roboto(
-                              fontSize: 14,
+                      child: SingleChildScrollView(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(7),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black45,
+                                blurRadius: 0.1,
+                                offset: Offset(0, 0),
+                              ),
+                            ],
+                          ),
+                          width: 220,
+                          height: 50,
+                          child: TextField(
+                            keyboardType: TextInputType.text,
+                            style: GoogleFonts.roboto(),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(top: 15),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.black38,
+                                size: 20,
+                              ),
+                              hintText: "Search",
+                              hintStyle: GoogleFonts.roboto(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ),
@@ -134,168 +136,168 @@ class _RoutinePageState extends State<RoutinePage> {
             ),
           ),
           //Text(routineDataDemo.length.toString()),
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            child: ListView.builder(
-              itemCount: routineDataDemo.length,
-              shrinkWrap: true,
-              //scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                return Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Container(
-                      height: 130,
-                      child: GridView(
-                        children: [
-                          Container(
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'images/pic1.PNG',
-                                  width: double.infinity,
-                                  height: 55,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Text(
-                                    "${routineDataDemo[index].teacherName}",
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 4, bottom: 5),
-                                  child: Text(
-                                    "Teacher",
-                                    style: GoogleFonts.roboto(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20),
-                                  child: Divider(
-                                    height: 10,
-                                    thickness: 0.5,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 50, top: 10),
-                                        child: Icon(
-                                          Icons.circle_outlined,
-                                          size: 12,
-                                          color: Colors.green,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Center(
-                                        child: Text(
-                                      "${routineDataDemo[index].subjectName}",
-                                      style: GoogleFonts.robotoSerif(),
-                                    )),
-                                  ],
-                                ),
-                                Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 52),
-                                      child: Image.asset(
-                                        'images/dote.png',
-                                        height: 12,
-                                      ),
-                                    )),
 
-                                Row(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 50,
-                                        ),
-                                        child: Icon(
-                                          Icons.circle_outlined,
-                                          size: 12,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "${routineDataDemo[index].startingTime} am",
-                                      style: GoogleFonts.robotoSerif(),
-                                    ),
-                                  ],
-                                ),
-
-                                Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 52),
-                                      child: Image.asset(
-                                        'images/dote.png',
-                                        height: 12,
-                                      ),
-                                    )),
-
-                                Row(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 50,
-                                        ),
-                                        child: Icon(
-                                          Icons.circle_outlined,
-                                          size: 12,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "${routineDataDemo[index].day}",
-                                      style: GoogleFonts.robotoSerif(),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            color: Colors.white,
-                          ),
-
-                         
-                        ],
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisExtent: 200,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10),
+            // ({widget.value}=="{routineDataDemo['day']}") ?
+              SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Container(
+                height: MediaQuery.of(context).size.height * .65,
+                child: GridView.builder(
+                      itemCount: routineDataDemo.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 8.0 / 10.0,
+                crossAxisCount: 2,
                       ),
+                      itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Card(
+                        semanticContainer: true,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                              Image.asset('images/pic1.PNG',height: 75,width: double.infinity,),
+                              Padding(
+                                    padding: const EdgeInsets.only(top: 6,),
+                                    child: Center(
+                                      child: Text(
+                                        "${routineDataDemo[index].teacherName}",
+                                        style: GoogleFonts.roboto(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                    Padding(
+                                    padding:
+                                        const EdgeInsets.only(top: 6),
+                                    child: Center(
+                                      child: Text(
+                                        "Teacher",
+                                        style: GoogleFonts.roboto(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                  ),
+                                 Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 20),
+                                    child: Divider(
+                                      height: 10,
+                                      thickness: 0.5,
+                                    ),
+                                  ),
+                                  
+                                    Row(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 50, top: 10),
+                                          child: Icon(
+                                            Icons.circle_outlined,
+                                            size: 12,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Center(
+                                          child: Text(
+                                        "${routineDataDemo[index].subjectName}",
+                                        style: GoogleFonts.robotoSerif(),
+                                      )),
+                                    ],
+                                  ),
+                                  Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 52),
+                                        child: Image.asset(
+                                          'images/dote.png',
+                                          height: 12,
+                                        ),
+                                      ),
+                                      ),
+                                       Row(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 50,
+                                          ),
+                                          child: Icon(
+                                            Icons.circle_outlined,
+                                            size: 12,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "${routineDataDemo[index].startingTime}",
+                                        style: GoogleFonts.robotoSerif(),
+                                      ),
+                                    ],
+                                  ),
+
+                                  Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 52),
+                                        child: Image.asset(
+                                          'images/dote.png',
+                                          height: 12,
+                                        ),
+                                      ),
+                                      ),
+
+                                            Row(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 50,
+                                          ),
+                                          child: Icon(
+                                            Icons.circle_outlined,
+                                            size: 12,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "${routineDataDemo[index].day}",
+                                        style: GoogleFonts.robotoSerif(),
+                                      ),
+                                    ],
+                                  ),         
+                          ],
+                        ),
+                        ),
+                        );
+                      },
                     ),
-                  ),
-                );
-              },
+              ),
             ),
-          ),
+          ), 
+          //:Container()
         ],
       ),
     );

@@ -94,9 +94,9 @@ List <UserDetailsModel> userData=[];
   Widget build(BuildContext context) {
     return Drawer(
         backgroundColor: Colors.white,
-        child: ListView(
-          children: [
-            DrawerHeader(
+           child: ListView(
+             children: [
+             DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -104,13 +104,14 @@ List <UserDetailsModel> userData=[];
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Image.asset('images/user.jpeg',height: 70,width: 70,fit: BoxFit.cover,),
+                    // child: Image.network('${user['photo']}',height: 70,width: 70,fit: BoxFit.cover),
                   ),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 40),
-                      child: Text("Jony Bristow",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                      // child: Text('${user['name']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                      // ),
                     ),
                   ),
                   Padding(
@@ -122,7 +123,8 @@ List <UserDetailsModel> userData=[];
                   ),
                   Align(
                     alignment: Alignment.center+Alignment(0, 0.2),
-                    child: Text("University of Michigan",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),),
+                    // child: Text('${user['class_name']}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),
+                    // ),
                   ),
                 ],
               ),
@@ -256,7 +258,8 @@ List <UserDetailsModel> userData=[];
           ),
           ],
         ),
-    ); 
+            
+        );
   }
 }
 
@@ -266,3 +269,12 @@ List <UserDetailsModel> userData=[];
 //                 Text("Log out"),
 //               ],
 //             ),
+
+
+        // child: ListView.builder(
+        //     itemCount: userData.length,
+        //     shrinkWrap: true,
+        //     itemBuilder: (context, index) {
+
+        //         }
+        // ), 
