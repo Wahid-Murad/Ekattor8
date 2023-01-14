@@ -100,33 +100,43 @@ List <UserDetailsModel> userData=[];
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
-              child: Stack(
-                children: [
+              
+              child: ListView.builder(
+               itemCount: userData.length,
+               shrinkWrap: true,
+               itemBuilder: (context, index) {       
+               return Stack(
+                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    // child: Image.network('${user['photo']}',height: 70,width: 70,fit: BoxFit.cover),
+                    child: Image.network('${user['photo']}',height: 70,width: 70,fit: BoxFit.cover),
                   ),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      // child: Text('${user['name']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
-                      // ),
+                      padding: const EdgeInsets.only(top: 20,left: 20),
+                      child: Text('${user['name']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 150,top: 40),
+                    padding: const EdgeInsets.only(left: 200,top: 20),
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Icon(Icons.verified,color: Colors.blue,),
                     ),
                   ),
                   Align(
-                    alignment: Alignment.center+Alignment(0, 0.2),
-                    // child: Text('${user['class_name']}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),
-                    // ),
+                    alignment: Alignment.bottomLeft,//+Alignment(0, 0.4)
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50,left: 100),
+                      child: Text('Class ${user['class_name']}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
+                      ),
+                    ),
                   ),
                 ],
+              );
+               }
               ),
              
             ),

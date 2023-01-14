@@ -468,7 +468,7 @@ List <UserDetailsModel> userData=[];
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.only(left: 4),
-                                                child: Icon(Icons.radio_button_checked,size: 15,),
+                                              child: (user['gender']=="Female") ? Icon(Icons.radio_button_checked,size: 15,color: Colors.blue): Icon(Icons.radio_button_checked,size: 15,color: Colors.black),
                                               ),
                                               SizedBox(
                                                 width: 5,
@@ -499,7 +499,7 @@ List <UserDetailsModel> userData=[];
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.only(left: 4),
-                                                child: Icon(Icons.radio_button_checked,size: 15,color: Colors.blue,),
+                                                child: (user['gender']=="Male") ? Icon(Icons.radio_button_checked,size: 15,color: Colors.blue): Icon(Icons.radio_button_checked,size: 15,color: Colors.black),
                                               ),
                                               SizedBox(
                                                 width: 5,
@@ -530,7 +530,7 @@ List <UserDetailsModel> userData=[];
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.only(left: 4),
-                                                child: Icon(Icons.radio_button_checked,size: 15,),
+                                                child: (user['gender']=="Others") ? Icon(Icons.radio_button_checked,size: 15,color: Colors.blue): Icon(Icons.radio_button_checked,size: 15,color: Colors.black),
                                               ),
                                               SizedBox(
                                                 width: 5,
