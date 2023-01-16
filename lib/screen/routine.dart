@@ -90,7 +90,7 @@ class _RoutinePageState extends State<RoutinePage> {
                 Stack(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 250),
+                      padding: const EdgeInsets.only(left: 240),
                       child: AppDropDown(),
                     ),
                     Positioned(
@@ -136,9 +136,10 @@ class _RoutinePageState extends State<RoutinePage> {
             ),
           ),
           //Text(routineDataDemo.length.toString()),
+          // Text("$widget.selectedValue"),
 
-            // ({widget.value}=="{routineDataDemo['day']}") ?
-              SingleChildScrollView(
+            // (${widget.selectedValue}=={routineDataDemo['day']}) ?
+             SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Container(

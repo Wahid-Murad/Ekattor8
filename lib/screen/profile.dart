@@ -187,7 +187,7 @@ List <UserDetailsModel> userData=[];
                         top: 200,
                         left: 100,
                         child: Padding(//${user['name']}
-                            padding: const EdgeInsets.only(left: 40,top: 5),
+                            padding: const EdgeInsets.only(left: 25,top: 5),
                                child: Text("${user['name']}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                                        ),
                                     ),

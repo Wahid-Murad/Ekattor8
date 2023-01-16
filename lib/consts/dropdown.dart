@@ -71,9 +71,6 @@ class _AppDropDownState extends State<AppDropDown> {
         onChanged: (value) {
           setState(() {
             selectedValue = value as String;
-          //  if(value==''){//test
-
-          //  }
           });
         },
         icon: const Icon(
@@ -83,7 +80,7 @@ class _AppDropDownState extends State<AppDropDown> {
         iconEnabledColor: Colors.white,
         iconDisabledColor: Colors.white,
         buttonHeight: 45,
-        buttonWidth: 90,
+        buttonWidth: 100,
         buttonPadding: const EdgeInsets.only(left: 6, right: 6),
         buttonDecoration: BoxDecoration(
           color: Colors.blue,
