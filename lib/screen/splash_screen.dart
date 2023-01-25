@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
     Widget example1 = SplashScreenView(
       navigateRoute: LoginPage(),
       duration: 4000,
-      imageSize: 600,
+      imageSize: 500,
       imageSrc: "images/splash.png",
 
       //text: "Splash Screen",
@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
       //   Colors.yellow,
       //   Colors.red,
       // ],
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0XFF171833),
     );
 
     return MaterialApp(

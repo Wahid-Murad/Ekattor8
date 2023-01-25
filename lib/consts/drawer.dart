@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:ekattor_8/model/user_details_model.dart';
+import 'package:ekattor_8/screen/attendance.dart';
 import 'package:ekattor_8/screen/login.dart';
+import 'package:ekattor_8/screen/profile.dart';
 import 'package:ekattor_8/screen/routine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -154,7 +156,7 @@ List <UserDetailsModel> userData=[];
             ),
             ListTile(
               onTap: (){
-                
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfilePage()));
               },
              leading: Icon(Icons.cabin),
              title: Text("Student") ,  
@@ -181,7 +183,7 @@ List <UserDetailsModel> userData=[];
             ),
             ListTile(
               onTap: (){
-                
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AttendancePage()));
               },
              leading: Icon(Icons.person),
              title: Text("Attendance Report") ,  

@@ -1,32 +1,30 @@
-import 'dart:convert';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:ekattor_8/model/routine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
-class AppDropDown extends StatefulWidget {
-  AppDropDown({super.key, this.selectText});
-
-  String? selectText;
-
+class DropDown2 extends StatefulWidget {
+  const DropDown2({super.key});
 
   @override
-  State<AppDropDown> createState() => _AppDropDownState();
+  State<DropDown2> createState() => _DropDown2State();
 }
 
-class _AppDropDownState extends State<AppDropDown> {
+class _DropDown2State extends State<DropDown2> {
   final List<String> items = [
-    'Saturday',
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thrusday',
-    'Friday',
+    'Month',
+    'January,2023',
+    'February,2023',
+    'March,2023',
+    'April,2023',
+    'May,2023',
+    'June,2023',
+    'July,2023',
+    'Auguest,2023',
+    'September,2023',
+    'October,2023',
+    'November,2023',
+    'December,2023',
   ];
   String ? selectedValue;
 
@@ -42,11 +40,11 @@ class _AppDropDownState extends State<AppDropDown> {
             ),
             Expanded(
               child: Text(
-                "Day",
+                "Month",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.lightBlueAccent,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -77,13 +75,13 @@ class _AppDropDownState extends State<AppDropDown> {
           Icons.arrow_drop_down_outlined,
         ),
         iconSize: 20,
-        iconEnabledColor: Colors.white,
-        iconDisabledColor: Colors.white,
-        buttonHeight: 45,
-        buttonWidth: 100,
+        iconEnabledColor: Colors.blue,
+        iconDisabledColor: Colors.blue,
+        buttonHeight: 40,
+        buttonWidth: 160,
         buttonPadding: const EdgeInsets.only(left: 6, right: 6),
         buttonDecoration: BoxDecoration(
-          color: Colors.blue,
+          color: Colors.white,//
           borderRadius: BorderRadius.circular(2),
           boxShadow: const [
             BoxShadow(
@@ -97,7 +95,7 @@ class _AppDropDownState extends State<AppDropDown> {
         itemHeight: 40,
         itemPadding: const EdgeInsets.only(left: 14, right: 14),
         dropdownMaxHeight: 180,
-        dropdownWidth: 100,
+        dropdownWidth: 160,
         dropdownPadding: null,
         dropdownDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(2),

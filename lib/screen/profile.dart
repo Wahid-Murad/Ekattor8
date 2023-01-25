@@ -160,8 +160,8 @@ List <UserDetailsModel> userData=[];
                   ),
 
                       Positioned(
-                        left: 60,
-                        top: 20,
+                        left: 10,
+                        top: 10,
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: IconButton(onPressed: (){
@@ -171,15 +171,15 @@ List <UserDetailsModel> userData=[];
                        ),
                  
                        Positioned(
-                        left: 150,
+                        left: 140,
                         top: 95,
                         child: Align(
                           alignment: Alignment.topCenter,
-                          child: Image.network('${user['photo']}',height: 97,width: 97,),
+                          child: Center(child: Image.network('${user['photo']}',height: 97,width: 97,)),
                           ),
                        ),
                        Positioned(
-                        left: 190,
+                        left: 180,
                         top: 180,
                         child: Icon(Icons.verified,color: Colors.blue,),
                        ),
@@ -187,16 +187,16 @@ List <UserDetailsModel> userData=[];
                         top: 200,
                         left: 100,
                         child: Padding(//${user['name']}
-                            padding: const EdgeInsets.only(left: 25,top: 5),
-                               child: Text("${user['name']}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            padding: const EdgeInsets.only(left: 28,top: 5),
+                               child: Center(child: Text("${user['name']}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                                        ),
                                     ),
                    Positioned(
                     top: 225,
                     left: 140,
                      child: Padding(
-                       padding: const EdgeInsets.only(left: 35,top: 3),
-                       child: Text("${user['class_name']}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w300,),),
+                       padding: const EdgeInsets.only(left: 18,top: 3),
+                       child: Center(child: Text("Class ${user['class_name']}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,),)),
                      ),
                    ),
                      ],
@@ -210,22 +210,25 @@ List <UserDetailsModel> userData=[];
                    ),
                 
                    Padding(
-                     padding: const EdgeInsets.only(top: 15,left: 40,bottom: 20),
-                     child: Container(
-                      width: 200,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.blue.withOpacity(0.1),
-                      ),
-                      child: Center(child: Text("Student Profile Image",style: GoogleFonts.roboto(fontSize: 17,color: Colors.blue,fontWeight: FontWeight.bold),)),
+                     padding: const EdgeInsets.only(top: 15,bottom: 20),
+                     child: Center(
+                       child: Container(
+                        width: 200,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.blue.withOpacity(0.1),
+                        ),
+                        child: Center(child: Text("Student Profile Image",style: GoogleFonts.roboto(fontSize: 17,color: Colors.blue,fontWeight: FontWeight.bold),)),
+                       ),
                      ),
                    ),
                 
                    Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                      Padding(
-                       padding: const EdgeInsets.only(left: 18,right: 18),
+                       padding: const EdgeInsets.only(left: 18),
                        child: InkWell(
                         onTap: (){
                          
@@ -234,22 +237,19 @@ List <UserDetailsModel> userData=[];
                          ),
                        ),
                      ), 
-                     Padding(
-                       padding: const EdgeInsets.only(left: 70,right: 10),
-                       child: InkWell(
-                        onTap: (){
+                     InkWell(
+                      onTap: (){
                 
-                        },
-                         child: Text("Preview",style: GoogleFonts.roboto(fontSize: 16,fontWeight: FontWeight.w600),
-                         ),
+                      },
+                       child: Text("Preview",style: GoogleFonts.roboto(fontSize: 16,fontWeight: FontWeight.w600),
                        ),
                      ), 
-                     Padding(
-                       padding: const EdgeInsets.only(left: 40,right: 20),
-                       child: InkWell(
-                        onTap: (){
+                     InkWell(
+                      onTap: (){
                 
-                        },
+                      },
+                       child: Padding(
+                         padding: const EdgeInsets.only(right: 18),
                          child: Text("Delete",style: GoogleFonts.roboto(fontSize: 15,fontWeight: FontWeight.w600,color: Colors.red),
                          ),
                        ),
@@ -302,20 +302,22 @@ List <UserDetailsModel> userData=[];
                     ],
                    ),
                    Padding(
-                     padding: const EdgeInsets.only(top: 20,left: 40),
-                     child: Text("Personal Info",style: GoogleFonts.roboto(fontSize: 22,fontWeight: FontWeight.bold),),
+                     padding: const EdgeInsets.only(top: 20),
+                     child: Center(child: Text("Personal Info",style: GoogleFonts.roboto(fontSize: 22,fontWeight: FontWeight.bold),)),
                    ),
                 
                         Padding(
-                     padding: const EdgeInsets.only(top: 15,left: 20,),
-                     child: Container(
-                      width: 100,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.blue.withOpacity(0.1),
-                      ),
-                      child: Center(child: Text("Basic Info",style: GoogleFonts.roboto(fontSize: 17,color: Colors.blue,fontWeight: FontWeight.bold),)),
+                     padding: const EdgeInsets.only(top: 15),
+                     child: Center(
+                       child: Container(
+                        width: 100,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.blue.withOpacity(0.1),
+                        ),
+                        child: Center(child: Text("Basic Info",style: GoogleFonts.roboto(fontSize: 17,color: Colors.blue,fontWeight: FontWeight.bold),)),
+                       ),
                      ),
                    ),
                 

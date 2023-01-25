@@ -4,9 +4,15 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TopBar extends StatelessWidget {
-  const TopBar({super.key});
+class TopBar extends StatefulWidget {
+TopBar({super.key,this.title});
+   String ? title;
 
+  @override
+  State<TopBar> createState() => _TopBarState();
+}
+
+class _TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
@@ -30,8 +36,9 @@ class TopBar extends StatelessWidget {
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.only(left: 30),
-                child: Text("Routine",style: GoogleFonts.roboto(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,
-                ),),
+                child: Text('${widget.title}',style: GoogleFonts.roboto(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,
+                ),
+                ),
               )),
           ],
         ),
