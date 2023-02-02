@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
     Widget example1 = SplashScreenView(
       navigateRoute: LoginPage(),
       duration: 4000,
-      imageSize: 500,
+      imageSize: 650,
       imageSrc: "images/splash.png",
 
       //text: "Splash Screen",

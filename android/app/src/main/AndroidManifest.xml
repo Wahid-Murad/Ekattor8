@@ -29,6 +29,10 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
-            android:value="2" />
+            android:value="2" 
+             usesCleartextTraffic="true"
+                  androidSupportRtl="true"
+                  />
+                 
     </application>
 </manifest>

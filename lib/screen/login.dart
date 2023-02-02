@@ -48,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     else{
       Fluttertoast.showToast(msg: "Login Failed");
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
     }
   }
 

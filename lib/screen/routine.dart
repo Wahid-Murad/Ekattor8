@@ -32,6 +32,9 @@ class _RoutinePageState extends State<RoutinePage> {
     'friday',
   ];
   String ? selectedValue;
+  // String day = DateTime.now().toString();
+  
+
 
   List<RoutineModel> routineData = [];
   List<Routine> routineDataDemo = [];
@@ -98,7 +101,6 @@ class _RoutinePageState extends State<RoutinePage> {
           TopBar(
             title: "Routine",
           ),
-      
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
             child: Row(
@@ -135,7 +137,7 @@ class _RoutinePageState extends State<RoutinePage> {
                   value: item,
                   child: Center(
                     child: Text(
-                      item,
+                      item.replaceFirst(item[0], item[0].toUpperCase()),
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -146,10 +148,10 @@ class _RoutinePageState extends State<RoutinePage> {
                   ),
                 ))
                           .toList(),
-                value: selectedValue,
+                value: selectedValue,style:TextStyle(fontSize: 20,color: Colors.white),//white color
                 onChanged: (value) {
                         setState(() {
-                          selectedValue = value as String;
+                          selectedValue = value;
                           routineDataDemo.clear();
                           routineData.clear();
                         });
@@ -189,7 +191,7 @@ class _RoutinePageState extends State<RoutinePage> {
                 scrollbarRadius: const Radius.circular(10),
                 scrollbarThickness: 6,
                 scrollbarAlwaysShow: true,
-                offset: const Offset(0, 0),
+                offset: const Offset(0,0),
                             ),
                           ),
                     ),
@@ -254,18 +256,18 @@ class _RoutinePageState extends State<RoutinePage> {
             child: Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Container(
-                height: MediaQuery.of(context).size.height * .65,
+                height: MediaQuery.of(context).size.height*0.686,
                 child: GridView.builder(
                       itemCount: routineDataDemo.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 8.0 / 10.0,
+                        childAspectRatio: 8.0/10.0,
                        crossAxisCount: 2,
                       ),
                       itemBuilder: (BuildContext context, int index) {                    
                      return Column(
                        children: [
                         //if(routineDataDemo[index].day==selectedValue)
-                         Padding(
+                    Padding(
                     padding: EdgeInsets.all(5),  
                     child: Card(
                             semanticContainer: true,
@@ -276,7 +278,10 @@ class _RoutinePageState extends State<RoutinePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                  Image.asset('images/user2.PNG',height: 75,width: double.infinity,),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Image.asset('images/user2.PNG',height: 60,width: double.infinity,),
+                                  ),
                                   Padding(
                                         padding: const EdgeInsets.only(top: 6,),
                                         child: Center(
@@ -284,7 +289,7 @@ class _RoutinePageState extends State<RoutinePage> {
                                             "${routineDataDemo[index].teacherName}",
                                             style: GoogleFonts.roboto(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.w500),
                                           ),
                                         ),
                                       ),
@@ -329,7 +334,7 @@ class _RoutinePageState extends State<RoutinePage> {
                                           Center(
                                               child: Text(
                                             "${routineDataDemo[index].subjectName}",
-                                            style: GoogleFonts.robotoSerif(),
+                                            style: GoogleFonts.robotoSerif(fontWeight: FontWeight.w300),
                                           )),
                                         ],
                                       ),
@@ -363,7 +368,7 @@ class _RoutinePageState extends State<RoutinePage> {
                                           ),
                                           Text(
                                             "${routineDataDemo[index].startingTime}",
-                                            style: GoogleFonts.robotoSerif(),
+                                            style: GoogleFonts.robotoSerif(fontWeight: FontWeight.w300),
                                           ),
                                         ],
                                       ),
@@ -379,30 +384,33 @@ class _RoutinePageState extends State<RoutinePage> {
                                           ),
                                           ),
     
-                                                Row(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 50,
-                                              ),
-                                              child: Icon(
-                                                Icons.circle_outlined,
-                                                size: 12,
-                                                color: Colors.red,
+                                        Padding(
+                                          padding: const EdgeInsets.only(bottom: 7),
+                                          child: Row(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  left: 50,
+                                                ),
+                                                child: Icon(
+                                                  Icons.circle_outlined,
+                                                  size: 12,
+                                                  color: Colors.red,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            "${routineDataDemo[index].day}".replaceFirst(routineDataDemo[index].day![0], routineDataDemo[index].day![0].toUpperCase()),
-                                            style: GoogleFonts.robotoSerif(),
-                                          ),
-                                        ],
-                                      ),         
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              "${routineDataDemo[index].day}".replaceFirst(routineDataDemo[index].day![0], routineDataDemo[index].day![0].toUpperCase()),
+                                              style: GoogleFonts.robotoSerif(fontWeight: FontWeight.w300),
+                                            ),
+                                          ],
+                                      ),
+                                        ),         
                               ],
                             ),
                             ),
