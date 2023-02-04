@@ -22,16 +22,23 @@ class RoutinePage extends StatefulWidget {
 class _RoutinePageState extends State<RoutinePage> {
   var routine;
   SharedPreferences? sharedPreferences;
-    final List<String> items = [
-    'saturday',
+
+  static var today=DateTime.now();
+  
+    static var items = [
     'sunday',
     'monday',
     'tuesday',
     'wednesday',
     'thursday',
     'friday',
+    'saturday', 
   ];
+
+  static String currentday=items[today.weekday];
   String ? selectedValue;
+  
+
   // String day = DateTime.now().toString();
   
 
@@ -44,6 +51,7 @@ class _RoutinePageState extends State<RoutinePage> {
     dynamic token = sharedPreferences!.getString("access_token");
 
     print(token);
+    print(currentday);
 
     var url = "https://demo.creativeitem.com/test/Ekattor8/api/routine";
 
@@ -68,6 +76,21 @@ class _RoutinePageState extends State<RoutinePage> {
       });
 
       for (var data in routine["routines"]) {
+
+        if(data["day"]==currentday && selectedValue==null){
+        Routine routinedemo = Routine(
+            id: data["id"],
+            subjectId: data["subject_id"],
+            subjectName: data["subject_name"],
+            startingTime: data["starting_time"],
+            endingTime: data["ending_time"],
+            day: data["day"],
+            teacherId: data["teacher_id"],
+            teacherName: data["teacher_name"]);
+        setState(() {
+          routineDataDemo.add(routinedemo);
+        });
+        }
         if(data["day"]==selectedValue){
         Routine routinedemo = Routine(
             id: data["id"],
@@ -91,8 +114,6 @@ class _RoutinePageState extends State<RoutinePage> {
    fetchRoutine();
     super.initState();
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,7 +160,7 @@ class _RoutinePageState extends State<RoutinePage> {
                     child: Text(
                       item.replaceFirst(item[0], item[0].toUpperCase()),
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,            
                       ),
@@ -151,24 +172,26 @@ class _RoutinePageState extends State<RoutinePage> {
                 value: selectedValue,style:TextStyle(fontSize: 20,color: Colors.white),//white color
                 onChanged: (value) {
                         setState(() {
-                          selectedValue = value;
+                          selectedValue=value;
                           routineDataDemo.clear();
                           routineData.clear();
                         });
                         fetchRoutine();
+                        
                 },
+
                 icon: const Icon(
-                        Icons.arrow_drop_down_outlined,
+                        Icons.keyboard_arrow_down_outlined,
                 ),
                 iconSize: 20,
                 iconEnabledColor: Colors.white,
                 iconDisabledColor: Colors.white,
                 buttonHeight: 45,
-                buttonWidth: 100,
+                buttonWidth: 90,
                 buttonPadding: const EdgeInsets.only(left: 6, right: 6),
                 buttonDecoration: BoxDecoration(
                         color: Colors.blue,
-                        borderRadius: BorderRadius.circular(2),
+                        borderRadius: BorderRadius.circular(10),
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black54,
@@ -199,35 +222,23 @@ class _RoutinePageState extends State<RoutinePage> {
                     Positioned(
                       left: 10,
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(7),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black45,
-                              blurRadius: 0.1,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
+                        // decoration: BoxDecoration(
+                        //   color: Colors.white,
+                        //   borderRadius: BorderRadius.circular(7),
+                        //   boxShadow: [
+                        //     BoxShadow(
+                        //       color: Colors.black45,
+                        //       blurRadius: 0.1,
+                        //       offset: Offset(0, 0),
+                        //     ),
+                        //   ],
+                        // ),
+                        // width: 220,
+                        // height: 50,
+                        child: Center(child: Padding(
+                          padding: const EdgeInsets.only(left: 50,top: 10),
+                          child: Text("Select a day",style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w600),),
                         ),
-                        width: 220,
-                        height: 50,
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          style: GoogleFonts.roboto(),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(top: 15),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.black38,
-                              size: 20,
-                            ),
-                            hintText: "Search",
-                            hintStyle: GoogleFonts.roboto(
-                              fontSize: 14,
-                            ),
-                          ),
                         ),
                       ),
                     ),
@@ -242,11 +253,12 @@ class _RoutinePageState extends State<RoutinePage> {
              //"${user['name']}"
       
               //(selectedValue=={routineDataDemo['day']}) ? 
+             
               routineDataDemo.length!=0 ? 
             selectedDay(): Padding(
-              padding: const EdgeInsets.only(top: 23),
-              child: Image.asset('images/nodata.jpg',height: 190,),
-            ),  
+              padding: const EdgeInsets.only(top: 100),
+              child: Center(child: Image.asset('images/nodata.jpg',height: 190,width: double.infinity,),),
+            ) 
         ],
       ),
     );
@@ -256,9 +268,9 @@ class _RoutinePageState extends State<RoutinePage> {
             child: Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Container(
-                height: MediaQuery.of(context).size.height*0.686,
+                height: MediaQuery.of(context).size.height*0.687,
                 child: GridView.builder(
-                      itemCount: routineDataDemo.length,
+                      itemCount: routineDataDemo.length.compareTo(0),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 8.0/10.0,
                        crossAxisCount: 2,
@@ -267,9 +279,7 @@ class _RoutinePageState extends State<RoutinePage> {
                      return Column(
                        children: [
                         //if(routineDataDemo[index].day==selectedValue)
-                    Padding(
-                    padding: EdgeInsets.all(5),  
-                    child: Card(
+                    Card(
                             semanticContainer: true,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -287,7 +297,7 @@ class _RoutinePageState extends State<RoutinePage> {
                                         child: Center(
                                           child: Text(
                                             "${routineDataDemo[index].teacherName}",
-                                            style: GoogleFonts.roboto(
+                                            style: GoogleFonts.poppins(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -412,7 +422,6 @@ class _RoutinePageState extends State<RoutinePage> {
                                       ),
                                         ),         
                               ],
-                            ),
                             ),
                             ),
                        ],

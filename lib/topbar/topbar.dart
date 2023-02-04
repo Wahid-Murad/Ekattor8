@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TopBar extends StatefulWidget {
-TopBar({super.key,this.title});
+TopBar({super.key,this.title,});
    String ? title;
 
   @override
@@ -30,7 +30,13 @@ class _TopBarState extends State<TopBar> {
                 onTap: (){
                   Navigator.of(context).pop();
                 },
-                child: Icon(Icons.arrow_back,color: Colors.white,)),
+                child: Container(
+                  width: 30,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent
+                  ),
+                  child: Center(child: Icon(Icons.arrow_back,color: Colors.white,size: 16,)))),
             ),
             Align(
               alignment: Alignment.center,

@@ -1,34 +1,33 @@
+import 'dart:async';
+
 import 'package:ekattor_8/screen/login.dart';
 import 'package:flutter/material.dart';
-import 'package:splash_screen_view/SplashScreenView.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(Duration(seconds: 5), (){
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    Widget example1 = SplashScreenView(
-      navigateRoute: LoginPage(),
-      duration: 4000,
-      imageSize: 650,
-      imageSrc: "images/splash.png",
-
-      //text: "Splash Screen",
-      //textType: TextType.ColorizeAnimationText,
-      // textStyle: TextStyle(
-      //   fontSize: 40.0,
-      // ),
-      // colors: [
-      //   Colors.purple,
-      //   Colors.blue,
-      //   Colors.yellow,
-      //   Colors.red,
-      // ],
-      backgroundColor: Color(0XFF171833),
-    );
-
-    return MaterialApp(
-      //title: 'Splash screen Demo',
-      debugShowCheckedModeBanner: false,
-      home: example1,
+    return Scaffold(
+      body: Container(
+        child: Image.asset('images/splash.png',width: double.infinity,height: double.infinity,fit: BoxFit.cover,),
+      ),
     );
   }
 }
