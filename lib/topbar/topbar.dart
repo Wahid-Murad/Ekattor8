@@ -21,20 +21,21 @@ class _TopBarState extends State<TopBar> {
       //   alignment: FractionalOffset.center,
       // transform: new Matrix4.identity()
       //   ..rotateZ(0 * 3.1415927 / 360),
-        height: 150,
+        height: MediaQuery.of(context).size.height*0.22,
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 40,),
               child: InkWell(
                 onTap: (){
                   Navigator.of(context).pop();
                 },
                 child: Container(
-                  width: 30,
-                  height: 20,
+                  width: 28,
+                  height: 18,
                   decoration: BoxDecoration(
-                    color: Colors.blueAccent
+                    borderRadius: BorderRadius.circular(4),
+                    color: Color(0XFF3c8ade),
                   ),
                   child: Center(child: Icon(Icons.arrow_back,color: Colors.white,size: 16,)))),
             ),

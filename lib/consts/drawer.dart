@@ -98,50 +98,53 @@ List <UserDetailsModel> userData=[];
         backgroundColor: Colors.white,
            child: ListView(
              children: [
-             DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              
-              child: ListView.builder(
-               itemCount: userData.length,
-               shrinkWrap: true,
-               itemBuilder: (context, index) {       
-               return Stack(
-                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Image.network('${user['photo']}',height: 70,width: 70,fit: BoxFit.cover),
-                  ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20,left: 20),
-                      child: Text('${user['name']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
-                      ),
+             Container(
+              height: 100,
+               child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                
+                child: ListView.builder(
+                 itemCount: userData.length,
+                 shrinkWrap: true,
+                 itemBuilder: (context, index) {       
+                 return Stack(
+                   children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Image.network('${user['photo']}',height: 70,width: 70,fit: BoxFit.cover),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 200,top: 20),
-                    child: Align(
+                    Align(
                       alignment: Alignment.topCenter,
-                      child: Icon(Icons.verified,color: Colors.blue,),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,//+Alignment(0, 0.4)
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 50,left: 100),
-                      child: Text('Class ${user['class_name']}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20,left: 20),
+                        child: Text('${user['name']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-               }
-              ),
-             
+                    Padding(
+                      padding: const EdgeInsets.only(left: 200,top: 20),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Icon(Icons.verified,color: Colors.blue,),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,//+Alignment(0, 0.4)
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50,left: 100),
+                        child: Text('Class ${user['class_name']}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+                 }
+                ),
+               
             ),
+             ),
              Divider(
              height: 0,
              thickness: 0.1,
@@ -214,7 +217,7 @@ List <UserDetailsModel> userData=[];
                 
               },
              leading: Icon(Icons.event),
-             title: Text("Event Calender") ,  
+             title: Text("Event Calender"),  
             ),
             ListTile(
               onTap: (){
@@ -249,8 +252,8 @@ List <UserDetailsModel> userData=[];
                 ),
                 child: InkWell(
                   onTap: () {
-                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
-                    logout();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+                    logout();  
                   },
                   child: Row(
                     children: [
@@ -275,18 +278,3 @@ List <UserDetailsModel> userData=[];
   }
 }
 
-
-//  Row(
-//               children: [
-//                 Text("Log out"),
-//               ],
-//             ),
-
-
-        // child: ListView.builder(
-        //     itemCount: userData.length,
-        //     shrinkWrap: true,
-        //     itemBuilder: (context, index) {
-
-        //         }
-        // ), 
