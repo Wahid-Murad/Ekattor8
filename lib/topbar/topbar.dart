@@ -17,7 +17,7 @@ class _TopBarState extends State<TopBar> {
   Widget build(BuildContext context) {
     return ClipPath(
       child: Container(
-        color: Colors.blue,
+        color: Color(0XFF00A3FF),
       //   alignment: FractionalOffset.center,
       // transform: new Matrix4.identity()
       //   ..rotateZ(0 * 3.1415927 / 360),
@@ -25,25 +25,25 @@ class _TopBarState extends State<TopBar> {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 40,),
+              padding: const EdgeInsets.only(left: 12,bottom: 30),
               child: InkWell(
                 onTap: (){
                   Navigator.of(context).pop();
                 },
                 child: Container(
-                  width: 28,
-                  height: 18,
+                  width: 32,
+                  height: 20,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    color: Color(0XFF3c8ade),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color(0XFF0096EB), //3c8ade
                   ),
-                  child: Center(child: Icon(Icons.arrow_back,color: Colors.white,size: 16,)))),
+                  child: Center(child: Icon(Icons.arrow_back,color: Colors.white,size: 18,)))),
             ),
             Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: Text('${widget.title}',style: GoogleFonts.roboto(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,
+                padding: const EdgeInsets.only(left: 20,bottom: 30),
+                child: Text('${widget.title}',style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.white,
                 ),
                 ),
               )),

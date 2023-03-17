@@ -39,14 +39,16 @@ class _DropDown2State extends State<DropDown2> {
               width: 10,
             ),
             Expanded(
-              child: Text(
-                "Month",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlueAccent,
+              child: Center(
+                child: Text(
+                  "Month",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0XFF34B5FF),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -72,7 +74,7 @@ class _DropDown2State extends State<DropDown2> {
           });
         },
         icon: const Icon(
-          Icons.arrow_drop_down_outlined,
+          Icons.keyboard_arrow_down_outlined,
         ),
         iconSize: 20,
         iconEnabledColor: Colors.blue,
@@ -81,7 +83,7 @@ class _DropDown2State extends State<DropDown2> {
         buttonWidth: 160,
         buttonPadding: const EdgeInsets.only(left: 6, right: 6),
         buttonDecoration: BoxDecoration(
-          color: Colors.white,//
+          color: Color(0XFFE8F6FF),//
           borderRadius: BorderRadius.circular(2),
           boxShadow: const [
             BoxShadow(

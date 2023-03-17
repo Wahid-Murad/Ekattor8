@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     else{
       Fluttertoast.showToast(msg: "Login Failed");
-      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
+       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
     }
   }
 
@@ -57,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
     token= sharedPreferences!.getString("access_token");
     if(token==null){
       print("Token is Null");
-      
     }
     else{
     Fluttertoast.showToast(msg: "Already Logged In");
@@ -160,10 +159,10 @@ class _LoginPageState extends State<LoginPage> {
                                 prefixIcon: Icon(Icons.email,color: Colors.black38,size: 17,),
                                 hintText: "Example@domain.com",
                                 hintStyle: GoogleFonts.roboto(fontSize: 12,),
-                  
                               ),
                             ),
                            ),
+                           
                   
                           ],
                         ),

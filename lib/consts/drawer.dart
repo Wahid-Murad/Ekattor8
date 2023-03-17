@@ -1,10 +1,12 @@
 import 'dart:convert';
-
 import 'package:ekattor_8/model/user_details_model.dart';
 import 'package:ekattor_8/screen/attendance.dart';
+import 'package:ekattor_8/screen/book.dart';
 import 'package:ekattor_8/screen/login.dart';
 import 'package:ekattor_8/screen/profile.dart';
 import 'package:ekattor_8/screen/routine.dart';
+import 'package:ekattor_8/screen/subject.dart';
+import 'package:ekattor_8/screen/teachers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -99,7 +101,7 @@ List <UserDetailsModel> userData=[];
            child: ListView(
              children: [
              Container(
-              height: 100,
+              height: 90,
                child: DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -113,18 +115,18 @@ List <UserDetailsModel> userData=[];
                    children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Image.network('${user['photo']}',height: 70,width: 70,fit: BoxFit.cover),
+                      child: Image.network('${user['photo']}',height: 60,width: 60,fit: BoxFit.cover),
                     ),
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 20,left: 20),
+                        padding: const EdgeInsets.only(top: 10,left: 20),
                         child: Text('${user['name']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 200,top: 20),
+                      padding: const EdgeInsets.only(left: 200,top: 10),
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: Icon(Icons.verified,color: Colors.blue,),
@@ -133,8 +135,8 @@ List <UserDetailsModel> userData=[];
                     Align(
                       alignment: Alignment.bottomLeft,//+Alignment(0, 0.4)
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 50,left: 100),
-                        child: Text('Class ${user['class_name']}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),
+                        padding: const EdgeInsets.only(top: 35,left: 100),
+                        child: Text('Class ${user['class_name']}',style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.black45),
                         ),
                       ),
                     ),
@@ -150,98 +152,145 @@ List <UserDetailsModel> userData=[];
              thickness: 0.1,
             ),
 
-            ListTile(
-              onTap: (){
-                
-              },
-             leading: Icon(Icons.person),
-             title: Text("Parent") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+                onTap: (){
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const BookPage()));
+                },
+               leading: Icon(Icons.person_outlined),
+               title: Text("Book",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProfilePage()));
-              },
-             leading: Icon(Icons.cabin),
-             title: Text("Student") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const ProfilePage()));
+                },
+               leading: Icon(Icons.school),
+               title: Text("Student",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
             ),
-            ListTile(
-              onTap: (){
-              },
-             leading: Icon(Icons.expand),
-             title: Text("Exam") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                },
+               leading: Icon(Icons.event_note_outlined),
+               title: Text("Exam",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                
-              },
-             leading: Icon(Icons.feed),
-             title: Text("Fee") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5, 
+                onTap: (){
+                  
+                },
+               leading: Icon(Icons.payment),
+               title: Text("Fee",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                
-              },
-             leading: Icon(Icons.mark_as_unread),
-             title: Text("Marks") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  
+                },
+               leading: Icon(Icons.mode_edit_outline_outlined),
+               title: Text("Marks",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AttendancePage()));
-              },
-             leading: Icon(Icons.person),
-             title: Text("Attendance Report") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AttendancePage()));
+                },
+               leading: Icon(Icons.person_outlined),
+               title: Text("Attendance Report",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RoutinePage()));
-              },
-             leading: Icon(Icons.person),
-             title: Text("Routine"),  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RoutinePage()));
+                },
+               leading: Icon(Icons.person_outlined),
+               title: Text("Routine",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),),  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                
-              },
-             leading: Icon(Icons.task),
-             title: Text("Syllabus") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  
+                },
+               leading: Icon(Icons.payment),
+               title: Text("Syllabus",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                
-              },
-             leading: Icon(Icons.person),
-             title: Text("Assignment") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  
+                },
+               leading: Icon(Icons.calendar_month_outlined),
+               title: Text("Event Calender",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),),  
+              ),
             ),
-            ListTile(
-              onTap: (){
-                
-              },
-             leading: Icon(Icons.event),
-             title: Text("Event Calender"),  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SubjectPage()));
+                },
+               leading: Icon(Icons.online_prediction_sharp),
+               title: Text("Subjects",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,
+              ),
             ),
-            ListTile(
-              onTap: (){
-                
-              },
-             leading: Icon(Icons.person),
-             title: Text("Online Course") ,  
+            Container(
+              height: 45,
+              child: ListTile(
+                horizontalTitleGap: 15,
+                minLeadingWidth: 5,
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const TeachersPage()));
+                },
+               leading: Icon(Icons.person_outlined),
+               title: Text("Teachers",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,
+              ),
             ),
-            ListTile(
-              onTap: (){
-              },
-             leading: Icon(Icons.online_prediction),
-             title: Text("Live Class") ,
-            ),
-          // MaterialButton(
-          //   color: Colors.blue,
-          //   onPressed: (){},
-          //   child: Text("Logout"),
-          //   ),
+
           Padding(
-            padding: const EdgeInsets.only(left: 20,right: 145,bottom: 10),
+            padding: const EdgeInsets.only(left: 20,right: 145,bottom: 10,top: 15),
             child: InkWell(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LoginPage()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginPage()),
+                );
+                
               },
               child: Container(
                 width: 20,
@@ -252,7 +301,6 @@ List <UserDetailsModel> userData=[];
                 ),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
                     logout();  
                   },
                   child: Row(
@@ -262,8 +310,8 @@ List <UserDetailsModel> userData=[];
                       child: Icon(Icons.logout,size: 18,color: Colors.white,),
                     ),
                     Padding(
-                      padding:  EdgeInsets.only(bottom: 10,left: 10,top: 10),
-                      child: Text("Log out",style: GoogleFonts.roboto(fontSize: 15,color: Colors.white),),
+                      padding: EdgeInsets.only(bottom: 10,left: 10,top: 10),
+                      child: Text("Log out",style: GoogleFonts.poppins(fontSize: 14,color: Colors.white),),
                     ),
                     ],
                   ),
@@ -272,8 +320,7 @@ List <UserDetailsModel> userData=[];
             ),
           ),
           ],
-        ),
-            
+        ),         
         );
   }
 }

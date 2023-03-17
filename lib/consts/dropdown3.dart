@@ -33,13 +33,15 @@ class _DropDown3State extends State<DropDown3> {
               width: 10,
             ),
             Expanded(
-              child: Text("Week",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              child: Center(
+                child: Text("Week",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -65,16 +67,16 @@ class _DropDown3State extends State<DropDown3> {
           });
         },
         icon: const Icon(
-          Icons.arrow_drop_down_outlined,
+          Icons.keyboard_arrow_down_outlined,
         ),
         iconSize: 20,
-        iconEnabledColor: Colors.white,
-        iconDisabledColor: Colors.white,
+        iconEnabledColor: Colors.blue,
+        iconDisabledColor: Colors.blue,
         buttonHeight: 40,
         buttonWidth: 100,
         buttonPadding: const EdgeInsets.only(left: 6, right: 6),
         buttonDecoration: BoxDecoration(
-          color: Colors.blue,
+          color: Color(0XFFE8F6FF),
           borderRadius: BorderRadius.circular(2),
           boxShadow: const [
             BoxShadow(
