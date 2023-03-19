@@ -6,6 +6,7 @@ import 'package:ekattor_8/screen/login.dart';
 import 'package:ekattor_8/screen/profile.dart';
 import 'package:ekattor_8/screen/routine.dart';
 import 'package:ekattor_8/screen/subject.dart';
+import 'package:ekattor_8/screen/syllabus.dart';
 import 'package:ekattor_8/screen/teachers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -160,7 +161,7 @@ List <UserDetailsModel> userData=[];
                 onTap: (){
                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const BookPage()));
                 },
-               leading: Icon(Icons.person_outlined),
+               leading: Icon(Icons.menu_book),
                title: Text("Book",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
               ),
             ),
@@ -241,7 +242,7 @@ List <UserDetailsModel> userData=[];
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
                 onTap: (){
-                  
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SyllabusPage()));
                 },
                leading: Icon(Icons.payment),
                title: Text("Syllabus",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
