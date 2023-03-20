@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:ekattor_8/model/user_details_model.dart';
 import 'package:ekattor_8/screen/attendance.dart';
 import 'package:ekattor_8/screen/book.dart';
+import 'package:ekattor_8/screen/issue_bbok.dart';
 import 'package:ekattor_8/screen/login.dart';
 import 'package:ekattor_8/screen/profile.dart';
 import 'package:ekattor_8/screen/routine.dart';
@@ -154,19 +155,7 @@ List <UserDetailsModel> userData=[];
             ),
 
             Container(
-              height: 45,
-              child: ListTile(
-              horizontalTitleGap: 15,
-              minLeadingWidth: 5,
-                onTap: (){
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const BookPage()));
-                },
-               leading: Icon(Icons.menu_book),
-               title: Text("Book",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-            Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -178,7 +167,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -189,7 +178,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5, 
@@ -201,7 +190,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -213,7 +202,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -225,7 +214,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -237,7 +226,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -249,7 +238,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -261,7 +250,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -273,7 +262,7 @@ List <UserDetailsModel> userData=[];
               ),
             ),
             Container(
-              height: 45,
+              height: 40,
               child: ListTile(
                 horizontalTitleGap: 15,
                 minLeadingWidth: 5,
@@ -284,15 +273,42 @@ List <UserDetailsModel> userData=[];
                title: Text("Teachers",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,
               ),
             ),
+            
+             Container(
+              height: 40,
+              child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+                onTap: (){
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const BookPage()));
+                },
+               leading: Icon(Icons.menu_book),
+               title: Text("Book",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
+            ),
+
+             Container(
+              height: 40,
+              child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+                onTap: (){
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const IssueBookPage()));
+                },
+               leading: Icon(Icons.menu_book_sharp),
+               title: Text("Book Issue",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
+              ),
+            ),
+
 
           Padding(
             padding: const EdgeInsets.only(left: 20,right: 145,bottom: 10,top: 15),
             child: InkWell(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginPage()),
-                );
-                
+                );      
               },
+
               child: Container(
                 width: 20,
                 height: 40,

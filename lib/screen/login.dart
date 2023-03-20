@@ -307,14 +307,14 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                top: 10,
-                                bottom: 10,
+                                top: 5,
+                                bottom: 5,
                               ),
                               child: Center(
                                 child: Text(
                                   "Login",
                                   style: GoogleFonts.poppins(
-                                      fontSize: 16, color: Colors.white),
+                                      fontSize: 16, color: Colors.white,fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),

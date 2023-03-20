@@ -79,7 +79,7 @@ class _SubjectPageState extends State<SubjectPage> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.63,
+              // height: MediaQuery.of(context).size.height *subjectDataDemo.length*0.12,// 0.63
               width: MediaQuery.of(context).size.width * 0.90,
               child: Card(
                 child: Column(
@@ -92,13 +92,13 @@ class _SubjectPageState extends State<SubjectPage> {
                           Text(
                             "Name",
                             style: GoogleFonts.poppins(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           Spacer(),
                           Text(
                             "Class",
                             style: GoogleFonts.poppins(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -110,7 +110,7 @@ class _SubjectPageState extends State<SubjectPage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.55,
+                        height: MediaQuery.of(context).size.height * subjectDataDemo.length*0.082,//0.55,
                         child: ListView.builder(
                           itemCount: subjectDataDemo.length,
                           itemBuilder: (context, index) {
@@ -125,14 +125,14 @@ class _SubjectPageState extends State<SubjectPage> {
                                         "${subjectDataDemo[index].name}",
                                         style: GoogleFonts.poppins(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w300),
+                                            fontWeight: FontWeight.w500,color: Color(0XFF7C7F8D)),
                                       ),
                                       Spacer(),
                                       Text(
                                         "${subject['class_name']}",
                                         style: GoogleFonts.poppins(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w300),
+                                            fontWeight: FontWeight.w500,color: Color(0XFF7C7F8D)),
                                       ),
                                     ],
                                   ),

@@ -180,99 +180,172 @@ class _AttendancePageState extends State<AttendancePage> {
                   );
                 }),
           ),
-
-
           Container(
             height: MediaQuery.of(context).size.height * 0.52,
             child: ListView.builder(
-              itemCount: attendanceDataDemo.length,
-              itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: SingleChildScrollView(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.52,
-                    child: ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height*0.10,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 0, left: 10),
-                            child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
+                itemCount: attendanceDataDemo.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.52,
+                        child: ListView.builder(
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: MediaQuery.of(context).size.height * 0.10,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 0, left: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 0),
+                                          child: Icon(
+                                            Icons.circle_outlined,
+                                            color: Colors.blue,
+                                            size: 16,
+                                          ),
+                                        ),
+                                        Image.asset(
+                                          'images/dot2.PNG',
+                                        ),
+                                      ],
+                                    ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 0),
-                                      child: Icon(
-                                        Icons.circle_outlined,
-                                        color: Colors.blue,
-                                        size: 16,
+                                      padding: const EdgeInsets.only(right: 30),
+                                      child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          '${items[index]}',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
                                     ),
-                                    Image.asset('images/dot2.PNG',),
+                                    attendanceDataDemo[index].status == "1"
+                                        ? Container(
+                                            width: 80,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Color.fromARGB(
+                                                  255, 196, 245, 219),
+                                            ),
+                                            child: Center(
+                                                child: Column(
+                                              children: [
+                                                Icon(
+                                                  Icons.circle,
+                                                  size: 12,
+                                                  color: Color(0XFF50CD89),
+                                                ),
+                                                Text(
+                                                  "Present",
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Color.fromARGB(
+                                                          255, 86, 238, 10)),
+                                                ),
+                                              ],
+                                            )),
+                                          )
+                                        : Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10),
+                                            child: Container(
+                                              width: 80,
+                                              height: 45,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Color.fromARGB(
+                                                    255, 247, 213, 224),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  "Absent",
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.pink),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                    attendanceDataDemo[index].status == "0"
+                                        ? Container(
+                                            width: 80,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Color.fromARGB(
+                                                  255, 196, 245, 219),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "Present",
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color.fromARGB(
+                                                        255, 86, 238, 10)),
+                                              ),
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10),
+                                            child: Container(
+                                              width: 80,
+                                              height: 45,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Color.fromARGB(
+                                                    255, 247, 213, 224),
+                                              ),
+                                              child: Center(
+                                                child: Column(
+                                                  children: [
+                                                    Icon( Icons.circle,
+                                                  size: 12,
+                                                  color: Color(0XFFF1416C),),
+                                                    Text(
+                                                      "Absent",
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.pink),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                   ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 30),
-                                  child: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Text(
-                                      '${items[index]}',
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 80,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Color.fromARGB(255, 196, 245, 219),
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    "Present",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color:
-                                            Color.fromARGB(255, 86, 238, 10)),
-                                  )),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Container(
-                                    width: 80,
-                                    height: 45,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Color.fromARGB(255, 247, 213, 224),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      "Absent",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.pink),
-                                    )),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }),
+                  );
+                }),
           ),
         ],
       ),

@@ -67,21 +67,8 @@ class _BookPageState extends State<BookPage> {
         );
         setState(() {
           bookDataDemo.add(bookdemo);
-         //filteredBook=bookDataDemo;
         });
       }
-      // for (var info in book2["books"]) {//extra added
-      //   Book bookdemo2 = Book(
-      //     id: info["id"],
-      //     name: info["name"],
-      //     author: info["author"],
-      //     copies: info["copies"],
-      //     availableCopies: info["available_copies"],
-      //   );
-      //   setState(() {
-      //     display_list.add(bookdemo2);
-      //   });
-      // }
 
     }
   }
@@ -95,36 +82,6 @@ class _BookPageState extends State<BookPage> {
     super.initState();
   }
 
-  // List<Map<String, dynamic>> foundBook = []; //extra added
-  // List<Map<String, dynamic>> testBook = [];//extra added
-  // void runFilter(String enteredKeyword){//extra added
-  // List<Book> results=[];
-  // if(enteredKeyword.isEmpty){
-  //   results=bookDataDemo;
-  // }
-  // else{
-  //   results=bookDataDemo.where((bookname) => bookname.name.toString().toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
-  // }
-  // setState(() {
-  //   foundBook=results.cast<Map<String, dynamic>>();
-  // });
-  // }
-
-  //  = [];
-
-  // void copyList() {
-  //   display_list.addAll(bookDataDemo);
-  // }
-  // List<Book> display_list = List.from(bookDataDemo);
-
-
-
-  // void updateList(String value) {
-  //   //This is the function that filter our list
-  //   setState(() {
-  //     bookDataDemo.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
-  //   });
-  // }
 
   void filterBook(value){
     setState(() {
@@ -167,14 +124,11 @@ class _BookPageState extends State<BookPage> {
                   onChanged: (value) {
                     filterBook(value);
                   },
-                  // controller: searchController,
-                  // onChanged: (value) => updateList(value),
-                  // onChanged: (value) => runFilter(value),//extra added
+                 
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    //filled: true,
-                    //fillColor: Color(0XFFB7BAC2),
+                 
                     prefixIcon: Icon(
                       Icons.search,
                       size: 15,
@@ -190,76 +144,79 @@ class _BookPageState extends State<BookPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10,),
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.72,
                 child: filteredBook.length >0 ? ListView.builder(
                   itemCount: filteredBook.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Book Name",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                    "Available Copies",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              height: 15,
-                              thickness: 1,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Row(
-                                //"${bookDataDemo[index].name}",
-                                children: [
-                                  Text(
-                                    "${filteredBook[index].name}",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                    "${filteredBook[index].availableCopies}",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  "${filteredBook[index].author}",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w300),
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        child: Card(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5,left: 10,right: 10,),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Book Name",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      "Available Copies",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                          ],
+                              Divider(
+                                height: 15,
+                                thickness: 1,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Row(
+                                  //"${bookDataDemo[index].name}",
+                                  children: [
+                                    Text(
+                                      "${filteredBook[index].name}",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,color: Color(0XFF11152C)),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      "${filteredBook[index].availableCopies}",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,color: Color(0XFF7C7F8D)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    "${filteredBook[index].author}",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,color: Color(0XFF7C7F8D)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -270,6 +227,7 @@ class _BookPageState extends State<BookPage> {
           ],
         ),
       ),
+    
     );
   }
 }
