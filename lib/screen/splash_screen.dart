@@ -29,10 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 4), (){
+    Timer(Duration(seconds: 3), (){
       isLogin() == true ?
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const ProfilePage()))
-         : Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => ProfilePage()))
+          :  Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) =>LoginPage()));
       
     });
   }

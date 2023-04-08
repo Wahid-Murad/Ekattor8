@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:ekattor_8/consts/drawer.dart';
 import 'package:ekattor_8/model/book_model.dart';
+import 'package:ekattor_8/topbar/my_custom_clipper.dart';
 import 'package:ekattor_8/topbar/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -17,6 +19,7 @@ class BookPage extends StatefulWidget {
 }
 
 class _BookPageState extends State<BookPage> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var book;
   SharedPreferences? sharedPreferences;
 
@@ -69,7 +72,6 @@ class _BookPageState extends State<BookPage> {
           bookDataDemo.add(bookdemo);
         });
       }
-
     }
   }
 
@@ -77,31 +79,66 @@ class _BookPageState extends State<BookPage> {
   void initState() {
     fetchBook();
     setState(() {
-    filteredBook=bookDataDemo;
+      filteredBook = bookDataDemo;
     });
     super.initState();
   }
 
-
-  void filterBook(value){
+  void filterBook(value) {
     setState(() {
-       filteredBook=bookDataDemo.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
+      filteredBook = bookDataDemo
+          .where((element) =>
+              element.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
     });
-   
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: DemoDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              child: TopBar(
-                title: "Book",
+            ClipPath(
+              child: Container(
+                color: Color(0XFF00A3FF),
+                height: MediaQuery.of(context).size.height * 0.22,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12, bottom: 30),
+                      child: InkWell(
+                          onTap: () {
+                            _scaffoldKey.currentState!.openDrawer();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          )),
+                    ),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30, bottom: 30),
+                          child: Text(
+                            'Book',
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
               ),
+              clipper: MyCustomClipper(),
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -124,11 +161,9 @@ class _BookPageState extends State<BookPage> {
                   onChanged: (value) {
                     filterBook(value);
                   },
-                 
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                 
                     prefixIcon: Icon(
                       Icons.search,
                       size: 15,
@@ -144,90 +179,103 @@ class _BookPageState extends State<BookPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10,),
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.72,
-                child: filteredBook.length >0 ? ListView.builder(
-                  itemCount: filteredBook.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5,left: 10,right: 10,),
-                                child: Row(
+                height: MediaQuery.of(context).size.height * 0.70,
+                child: filteredBook.length > 0
+                    ? ListView.builder(
+                        itemCount: filteredBook.length,
+                        shrinkWrap: true,
+                        // physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 5),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.18,
+                              child: Card(
+                                child: Column(
                                   children: [
-                                    Text(
-                                      "Book Name",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 5,
+                                        left: 10,
+                                        right: 10,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Book Name",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            "Available Copies",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Spacer(),
-                                    Text(
-                                      "Available Copies",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600),
+                                    Divider(
+                                      height: 15,
+                                      thickness: 1,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
+                                      child: Row(
+                                        //"${bookDataDemo[index].name}",
+                                        children: [
+                                          Text(
+                                            "${filteredBook[index].name}",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0XFF11152C)),
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            "${filteredBook[index].availableCopies}",
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0XFF7C7F8D)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          "${filteredBook[index].author}",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0XFF7C7F8D)),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              Divider(
-                                height: 15,
-                                thickness: 1,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Row(
-                                  //"${bookDataDemo[index].name}",
-                                  children: [
-                                    Text(
-                                      "${filteredBook[index].name}",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,color: Color(0XFF11152C)),
-                                    ),
-                                    Spacer(),
-                                    Text(
-                                      "${filteredBook[index].availableCopies}",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,color: Color(0XFF7C7F8D)),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Text(
-                                    "${filteredBook[index].author}",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,color: Color(0XFF7C7F8D)),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ):Image.asset('images/nodata.jpg'),
+                            ),
+                          );
+                        },
+                      )
+                    : Image.asset('images/nodata.jpg'),
               ),
             ),
           ],
         ),
       ),
-    
     );
   }
 }

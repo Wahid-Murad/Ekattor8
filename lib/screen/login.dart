@@ -22,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   late UserModel userModel;
   String? token;
   bool _rememberMe = false;
+  var tcVisibility = false;
   SharedPreferences? sharedPreferences;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -37,7 +38,8 @@ class _LoginPageState extends State<LoginPage> {
       body: map,
       //headers: DefaultToken.defaultHeader,
     );
-    final data = jsonDecode(response.body);
+    
+     final data = jsonDecode(response.body);
     if (response.statusCode == 201) {
       setState(() {
         sharedPreferences!.setString("access_token", data["token"]);
@@ -54,15 +56,42 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  //  isLogin() async{
+  //   sharedPreferences = await SharedPreferences.getInstance();
+  //   token=sharedPreferences!.getString("token");
+  //   try{
+  //   if(token!.isNotEmpty){
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => BottomNav()));
+  //   }
+  //   else{
+  //        Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
+  //        print("Token is Null"); 
+  //   }
+  //   }
+  //   catch(e){
+  //     print("Exception is $e");
+  //   }
+  // }
+
   isLogin() async {
     sharedPreferences = await SharedPreferences.getInstance();
     token = sharedPreferences!.getString("access_token");
+    try{
     if (token == null) {
       print("Token is Null");
     } else {
       Fluttertoast.showToast(msg: "Already Logged In");
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => ProfilePage()));
+      // return ProfilePage();
+    //   navigator.pushAndRemoveUntil(
+    // MaterialPageRoute(builder: (BuildContext context) => MyHomePage()),
+    // ModalRoute.withName('/'),
+
+    }
+    }
+    catch(e){
+      print("Exception is $e");
     }
   }
 
@@ -125,11 +154,13 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Login",
-                      style: GoogleFonts.roboto(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
+                    Center(
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.roboto(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -245,9 +276,16 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               suffixIcon: Padding(
                                 padding: const EdgeInsets.only(right: 30),
-                                child: Icon(
-                                  Icons.visibility_off,
-                                  size: 15,
+                                child: InkWell(
+                                  onTap: () {
+     setState(() {
+         tcVisibility = true;
+    });
+                                  },
+                                  child: Icon(
+                                    Icons.visibility_off,
+                                    size: 15,
+                                  ),
                                 ),
                               ),
                             ),
@@ -265,7 +303,7 @@ class _LoginPageState extends State<LoginPage> {
                                     activeColor: Colors.white,
                                     onChanged: (value) {
                                       setState(() {
-                                        // _rememberMe=value;
+                                        //_rememberMe=value;
                                       });
                                     }),
                               ),
@@ -293,6 +331,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         InkWell(
                           onTap: () {
+                          //   if(emailController==null || passwordController==null){
+                          //      Navigator.of(context).push(MaterialPageRoute(
+                          //       builder: (context) => LoginPage()));
+                          //   }
+                          //  else if(emailController==null && passwordController==null){
+                          //      Navigator.of(context).push(MaterialPageRoute(
+                          //       builder: (context) => LoginPage()));
+                          //   }
                             getLogin();
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => ProfilePage()));
@@ -305,17 +351,13 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(5),
                               color: Colors.blue,
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 5,
-                                bottom: 5,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Login",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 16, color: Colors.white,fontWeight: FontWeight.w600),
-                                ),
+                            child: Center(
+                              child: Text(
+                                "Login",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),

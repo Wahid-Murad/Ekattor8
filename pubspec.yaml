@@ -48,6 +48,10 @@ dependencies:
   dropdown_button2: ^1.9.2
   flutter_file_downloader: ^1.1.0+1
   intl: ^0.18.0
+  image_picker: ^0.8.7+1
+  percent_indicator: ^4.2.3
+  table_calendar: ^3.0.9
+  webview_flutter: ^4.0.7
   
 dev_dependencies:
   flutter_test:

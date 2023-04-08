@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:ekattor_8/consts/drawer.dart';
 import 'package:ekattor_8/model/syllabus_model.dart';
+import 'package:ekattor_8/topbar/my_custom_clipper.dart';
 import 'package:ekattor_8/topbar/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -10,6 +13,7 @@ import 'package:flutter_file_downloader/download_callbacks.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,6 +25,7 @@ class SyllabusPage extends StatefulWidget {
 }
 
 class _SyllabusPageState extends State<SyllabusPage> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var syllabus;
   String? selectedValue;
   SharedPreferences? sharedPreferences;
@@ -109,13 +114,49 @@ class _SyllabusPageState extends State<SyllabusPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: DemoDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              child: TopBar(
-                title: "Syllabus",
+            ClipPath(
+              child: Container(
+                color: Color(0XFF00A3FF),
+                height: MediaQuery.of(context).size.height * 0.22,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12, bottom: 30),
+                      child: InkWell(
+                          onTap: () {
+                            _scaffoldKey.currentState!.openDrawer();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          )),
+                    ),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30, bottom: 30),
+                          child: Text(
+                            'Syllabus',
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
               ),
+              clipper: MyCustomClipper(),
             ),
             Align(
               alignment: Alignment.centerLeft,
@@ -170,7 +211,7 @@ class _SyllabusPageState extends State<SyllabusPage> {
                         syllabusDataDemo.clear();
                         Colors.blue;
                       });
-      
+
                       fetchSyllabus();
                     },
                     icon: Align(
@@ -249,9 +290,13 @@ class _SyllabusPageState extends State<SyllabusPage> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Container(
-                          height: MediaQuery.of(context).size.height * syllabusDataDemo.length*0.082,
+                          height: MediaQuery.of(context).size.height *
+                              syllabusDataDemo.length *
+                              0.083,
                           child: ListView.builder(
                             itemCount: syllabusDataDemo.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.only(
@@ -267,10 +312,11 @@ class _SyllabusPageState extends State<SyllabusPage> {
                                           "${syllabusDataDemo[index].title}",
                                           style: GoogleFonts.poppins(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w500,color: Color(0XFF7C7F8D)),
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0XFF7C7F8D)),
                                         ),
                                         Spacer(), // progress != null ? const CircularProgressIndicator():
-      
+
                                         InkWell(
                                           onTap: () {
                                             FileDownloader.downloadFile(
@@ -318,7 +364,7 @@ class _SyllabusPageState extends State<SyllabusPage> {
                                         ),
                                       ],
                                     ),
-      
+
                                     const Divider(
                                       height: 23,
                                       thickness: 0.8,
@@ -340,4 +386,11 @@ class _SyllabusPageState extends State<SyllabusPage> {
       ),
     );
   }
+  // void downloadFile() async {
+  //   var time=DateTime.now().millisecondsSinceEpoch;
+  //   var path="/storage/emulated/0/Download/pdf-$time.pdf";
+  //   var file=File(path);
+  //   var res=await get(Uri.parse("Link here"));
+  //   file.writeAsBytes(res.bodyBytes);
+  // }
 }

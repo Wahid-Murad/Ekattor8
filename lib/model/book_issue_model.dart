@@ -74,6 +74,8 @@ class IssuedBook {
         status: json["status"],
     );
 
+  get d12 => null;
+
     Map<String, dynamic> toJson() => {
         "id": id,
         "book_id": bookId,

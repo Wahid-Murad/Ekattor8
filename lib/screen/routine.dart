@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:ekattor_8/consts/drawer.dart';
 import 'package:ekattor_8/model/routine_model.dart';
+import 'package:ekattor_8/topbar/my_custom_clipper.dart';
 import 'package:ekattor_8/topbar/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -20,6 +22,7 @@ class RoutinePage extends StatefulWidget {
 }
 
 class _RoutinePageState extends State<RoutinePage> {
+  GlobalKey<ScaffoldState> _scaffoldKey=GlobalKey<ScaffoldState>();
   var routine;
   SharedPreferences? sharedPreferences;
 
@@ -114,14 +117,42 @@ class _RoutinePageState extends State<RoutinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
+        drawer: DemoDrawer(),
       body: Column(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.22,
-            child: TopBar(
-              title: "Routine",
-            ),
+           ClipPath(
+        child: Container(
+          color: Color(0XFF00A3FF),
+          height: MediaQuery.of(context).size.height*0.22,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 12,bottom: 30),
+                child: InkWell(
+                  onTap: (){
+                    _scaffoldKey.currentState!.openDrawer();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Icon(Icons.menu,color: Colors.white,size: 18,),
+                  )),
+              ),
+             
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30,bottom: 30),
+                  child: Text('Routine',style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.white,
+                  ),
+                  ),
+                )),
+            ],
           ),
+        ),
+        clipper: MyCustomClipper(),
+    ),
+  
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Container(
@@ -175,7 +206,7 @@ class _RoutinePageState extends State<RoutinePage> {
                             value: selectedValue,
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.white), //white color
+                                color: Colors.red), //white color
                             onChanged: (value) {
                               setState(() {
                                 selectedValue = value;

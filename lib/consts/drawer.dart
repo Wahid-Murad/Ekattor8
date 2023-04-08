@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'package:ekattor_8/model/subject_model.dart';
 import 'package:ekattor_8/model/user_details_model.dart';
 import 'package:ekattor_8/screen/attendance.dart';
 import 'package:ekattor_8/screen/book.dart';
-import 'package:ekattor_8/screen/issue_bbok.dart';
+import 'package:ekattor_8/screen/exams.dart';
+import 'package:ekattor_8/screen/fee.dart';
+import 'package:ekattor_8/screen/issue_book.dart';
 import 'package:ekattor_8/screen/login.dart';
+import 'package:ekattor_8/screen/marks.dart';
 import 'package:ekattor_8/screen/profile.dart';
 import 'package:ekattor_8/screen/routine.dart';
 import 'package:ekattor_8/screen/subject.dart';
@@ -24,22 +28,22 @@ class DemoDrawer extends StatefulWidget {
 }
 
 class _DemoDrawerState extends State<DemoDrawer> {
-
-  GlobalKey<ScaffoldState> _scaffoldKey=GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var user;
-  bool _rememberMe=false;
-  SharedPreferences ? sharedPreferences;
+  bool _rememberMe = false;
+  SharedPreferences? sharedPreferences;
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('access_token');
     prefs.clear();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginPage()));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
-List <UserDetailsModel> userData=[];
+  List<UserDetailsModel> userData = [];
   fetchUser() async {
-    sharedPreferences=await SharedPreferences.getInstance();
+    sharedPreferences = await SharedPreferences.getInstance();
     dynamic token = sharedPreferences!.getString("access_token");
 
     print(token);
@@ -58,7 +62,7 @@ List <UserDetailsModel> userData=[];
       print(response.body);
       user = jsonDecode(response.body);
 
-         UserDetailsModel userDetailsModel = UserDetailsModel(
+      UserDetailsModel userDetailsModel = UserDetailsModel(
           id: user["id"],
           userId: user["user_id"],
           classId: user["class_id"],
@@ -79,236 +83,304 @@ List <UserDetailsModel> userData=[];
           photo: user["photo"],
           runningSession: user["running_session"],
           className: user["class_name"],
-          sectionName: user["section_name"]
-        );
-        setState(() {
-          userData.add(userDetailsModel);
-        });
+          sectionName: user["section_name"]);
+      setState(() {
+        userData.add(userDetailsModel);
+      });
     }
-    
-    
-
-
   }
+
   @override
   void initState() {
     fetchUser();
     super.initState();
-  }  
-  
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        backgroundColor: Colors.white,
-           child: ListView(
-             children: [
-             Container(
-              height: 90,
-               child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                
-                child: ListView.builder(
-                 itemCount: userData.length,
-                 shrinkWrap: true,
-                 itemBuilder: (context, index) {       
-                 return Stack(
-                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Image.network('${user['photo']}',height: 60,width: 60,fit: BoxFit.cover),
-                    ),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10,left: 20),
-                        child: Text('${user['name']}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
+      backgroundColor: Colors.white,
+      child: ListView(
+        children: [
+          Container(
+            height: 90,
+            child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: ListView.builder(
+                  itemCount: userData.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Image.network('${user['photo']}',
+                              height: 60, width: 60, fit: BoxFit.cover),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 200,top: 10),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Icon(Icons.verified,color: Colors.blue,),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,//+Alignment(0, 0.4)
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 35,left: 100),
-                        child: Text('Class ${user['class_name']}',style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.black45),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 20),
+                            child: Text(
+                              '${user['name']}',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                );
-                 }
-                ),
-               
+                        Padding(
+                          padding: const EdgeInsets.only(right: 20, top: 10),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Icon(
+                              Icons.verified,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 35, left: 100),
+                            child: Text(
+                              'Class ${user['class_name']}',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black45),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
             ),
-             ),
-             Divider(
-             height: 0,
-             thickness: 0.1,
-            ),
-
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const ProfilePage()));
-                },
-               leading: Icon(Icons.school),
-               title: Text("Student",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                },
-               leading: Icon(Icons.event_note_outlined),
-               title: Text("Exam",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5, 
-                onTap: (){
-                  
-                },
-               leading: Icon(Icons.payment),
-               title: Text("Fee",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  
-                },
-               leading: Icon(Icons.mode_edit_outline_outlined),
-               title: Text("Marks",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AttendancePage()));
-                },
-               leading: Icon(Icons.person_outlined),
-               title: Text("Attendance Report",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RoutinePage()));
-                },
-               leading: Icon(Icons.person_outlined),
-               title: Text("Routine",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),),  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SyllabusPage()));
-                },
-               leading: Icon(Icons.payment),
-               title: Text("Syllabus",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  
-                },
-               leading: Icon(Icons.calendar_month_outlined),
-               title: Text("Event Calender",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),),  
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SubjectPage()));
-                },
-               leading: Icon(Icons.online_prediction_sharp),
-               title: Text("Subjects",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,
-              ),
-            ),
-            Container(
-              height: 40,
-              child: ListTile(
-                horizontalTitleGap: 15,
-                minLeadingWidth: 5,
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const TeachersPage()));
-                },
-               leading: Icon(Icons.person_outlined),
-               title: Text("Teachers",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,
-              ),
-            ),
-            
-             Container(
-              height: 40,
-              child: ListTile(
+          ),
+          Divider(
+            height: 0,
+            thickness: 0.1,
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
               horizontalTitleGap: 15,
               minLeadingWidth: 5,
-                onTap: (){
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const BookPage()));
-                },
-               leading: Icon(Icons.menu_book),
-               title: Text("Book",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-
-             Container(
-              height: 40,
-              child: ListTile(
-              horizontalTitleGap: 15,
-              minLeadingWidth: 5,
-                onTap: (){
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const IssueBookPage()));
-                },
-               leading: Icon(Icons.menu_book_sharp),
-               title: Text("Book Issue",style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w600,color: Colors.black45),) ,  
-              ),
-            ),
-
-
-          Padding(
-            padding: const EdgeInsets.only(left: 20,right: 145,bottom: 10,top: 15),
-            child: InkWell(
-              onTap: (){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginPage()),
-                );      
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ProfilePage()));
               },
-
+              leading: Icon(Icons.school),
+              title: Text(
+                "Student",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const ExamsPage()));
+              },
+              leading: Icon(Icons.event_note_outlined),
+              title: Text(
+                "Exam",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => FeePage()));
+              },
+              leading: Icon(Icons.payment),
+              title: Text(
+                "Fee",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => MarksPage()));
+              },
+              leading: Icon(Icons.mode_edit_outline_outlined),
+              title: Text(
+                "Marks",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AttendancePage()));
+              },
+              leading: Icon(Icons.person_outlined),
+              title: Text(
+                "Attendance Report",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => RoutinePage()));
+              },
+              leading: Icon(Icons.person_outlined),
+              title: Text(
+                "Routine",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SyllabusPage()));
+              },
+              leading: Icon(Icons.payment),
+              title: Text(
+                "Syllabus",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SubjectPage()));
+              },
+              leading: Icon(Icons.online_prediction_sharp),
+              title: Text(
+                "Subjects",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const TeachersPage()));
+              },
+              leading: Icon(Icons.person_outlined),
+              title: Text(
+                "Teachers",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const BookPage()));
+              },
+              leading: Icon(Icons.menu_book),
+              title: Text(
+                "Book",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Container(
+            height: 40,
+            child: ListTile(
+              horizontalTitleGap: 15,
+              minLeadingWidth: 5,
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const IssueBookPage()));
+              },
+              leading: Icon(Icons.menu_book_sharp),
+              title: Text(
+                "Book Issue",
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black45),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 20, right: 145, bottom: 10, top: 15),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
               child: Container(
                 width: 20,
                 height: 40,
@@ -318,27 +390,35 @@ List <UserDetailsModel> userData=[];
                 ),
                 child: InkWell(
                   onTap: () {
-                    logout();  
+                    logout();
                   },
                   child: Row(
                     children: [
                       Padding(
-                      padding: const EdgeInsets.only(bottom: 10,left: 20,top: 10),
-                      child: Icon(Icons.logout,size: 18,color: Colors.white,),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10,left: 10,top: 10),
-                      child: Text("Log out",style: GoogleFonts.poppins(fontSize: 14,color: Colors.white),),
-                    ),
+                        padding: const EdgeInsets.only(
+                            bottom: 10, left: 20, top: 10),
+                        child: Icon(
+                          Icons.logout,
+                          size: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10, left: 10, top: 10),
+                        child: Text(
+                          "Log out",
+                          style: GoogleFonts.poppins(
+                              fontSize: 14, color: Colors.white),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
           ),
-          ],
-        ),         
-        );
+        ],
+      ),
+    );
   }
 }
-
