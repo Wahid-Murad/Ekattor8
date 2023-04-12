@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final marksModel = marksModelFromJson(jsonString);
+
 import 'dart:convert';
 
 MarksModel marksModelFromJson(String str) => MarksModel.fromJson(json.decode(str));
@@ -13,6 +17,7 @@ class MarksModel {
         required this.schoolId,
         required this.sessionId,
         required this.examMarks,
+        required this.examCategories,
     });
 
     int classId;
@@ -22,6 +27,7 @@ class MarksModel {
     String schoolId;
     String sessionId;
     List<ExamMark> examMarks;
+    List<ExamCategory> examCategories;
 
     factory MarksModel.fromJson(Map<String, dynamic> json) => MarksModel(
         classId: json["class_id"],
@@ -31,6 +37,7 @@ class MarksModel {
         schoolId: json["school_id"],
         sessionId: json["session_id"],
         examMarks: List<ExamMark>.from(json["exam_marks"].map((x) => ExamMark.fromJson(x))),
+        examCategories: List<ExamCategory>.from(json["exam_categories"].map((x) => ExamCategory.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -41,53 +48,78 @@ class MarksModel {
         "school_id": schoolId,
         "session_id": sessionId,
         "exam_marks": List<dynamic>.from(examMarks.map((x) => x.toJson())),
+        "exam_categories": List<dynamic>.from(examCategories.map((x) => x.toJson())),
+    };
+}
+
+class ExamCategory {
+    ExamCategory({
+        required this.examCategoryId,
+        required this.examCategoryName,
+    });
+
+    int examCategoryId;
+    String examCategoryName;
+
+    factory ExamCategory.fromJson(Map<String, dynamic> json) => ExamCategory(
+        examCategoryId: json["exam_category_id"],
+        examCategoryName: json["exam_category_name"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "exam_category_id": examCategoryId,
+        "exam_category_name": examCategoryName,
     };
 }
 
 class ExamMark {
     ExamMark({
-        required this.id,
-        required this.classId,
-        required this.sectionId,
+        required this.examId,
         required this.examCategoryId,
-        required this.bangla,
-        required this.english,
-        required this.drawing,
-        required this.mathematics,
+        required this.subjects,
         required this.comment,
     });
 
-    int id;
-    String classId;
-    String sectionId;
+    int examId;
     String examCategoryId;
-    String bangla;
-    String english;
-    String drawing;
-    String mathematics;
+    List<Subject> subjects;
     String comment;
 
     factory ExamMark.fromJson(Map<String, dynamic> json) => ExamMark(
-        id: json["id"],
-        classId: json["class_id"],
-        sectionId: json["section_id"],
+        examId: json["exam_id"],
         examCategoryId: json["exam_category_id"],
-        bangla: json["Bangla"],
-        english: json["English"],
-        drawing: json["Drawing"],
-        mathematics: json["Mathematics"],
+        subjects: List<Subject>.from(json["subjects"].map((x) => Subject.fromJson(x))),
         comment: json["comment"],
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
-        "class_id": classId,
-        "section_id": sectionId,
+        "exam_id": examId,
         "exam_category_id": examCategoryId,
-        "Bangla": bangla,
-        "English": english,
-        "Drawing": drawing,
-        "Mathematics": mathematics,
+        "subjects": List<dynamic>.from(subjects.map((x) => x.toJson())),
         "comment": comment,
+    };
+}
+
+class Subject {
+    Subject({
+        required this.subjectId,
+        required this.subjectName,
+        required this.marks,
+    });
+
+    int subjectId;
+    String subjectName;
+    String marks;
+
+    factory Subject.fromJson(Map<String, dynamic> json) => Subject(
+        subjectId: json["subject_id"],
+        subjectName: json["subject_name"],
+        marks: json["marks"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "subject_id": subjectId,
+        "subject_name": subjectName,
+        "marks": marks,
     };
 }

@@ -305,7 +305,7 @@ class _DemoDrawerState extends State<DemoDrawer> {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const SubjectPage()));
               },
-              leading: Icon(Icons.online_prediction_sharp),
+              leading: Icon(Icons.subject),//online_prediction_sharp
               title: Text(
                 "Subjects",
                 style: GoogleFonts.poppins(

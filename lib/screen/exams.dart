@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,6 +23,12 @@ class ExamsPage extends StatefulWidget {
 class _ExamsPageState extends State<ExamsPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var exams;
+  var examStartDate;
+  var examEndDate;
+  var dt1;
+  var dt2;
+  var dstart;
+  var dend;
   String? selectedValue;
   SharedPreferences? sharedPreferences;
 
@@ -60,14 +67,20 @@ class _ExamsPageState extends State<ExamsPage> {
 
       for (var data in exams["exams"]) {
         if (selectedValue == null) {
+          examStartDate = int.parse(data["starting_time"]);
+          dt1 = DateTime.fromMillisecondsSinceEpoch(examStartDate * 1000);
+          dstart = DateFormat('d MMM,yyyy  h:mm a').format(dt1);
+          examEndDate = int.parse(data["ending_time"]);
+          dt2 = DateTime.fromMillisecondsSinceEpoch(examEndDate * 1000);
+          dend = DateFormat('d MMM,yyyy  h:mm a').format(dt2);
           Exam examsdemo = Exam(
             id: data["id"],
             name: data["name"],
             examType: data["exam_type"],
             subjectId: data["subject_id"],
             subjectName: data["subject_name"],
-            startingTime: data["starting_time"],
-            endingTime: data["ending_time"],
+            startingTime: dstart,
+            endingTime: dend,
             totalMarks: data["total_marks"],
             status: data["status"],
           );
@@ -78,14 +91,20 @@ class _ExamsPageState extends State<ExamsPage> {
         }
 
         if (data["status"] == selectedValue) {
+          examStartDate = int.parse(data["starting_time"]);
+          dt1 = DateTime.fromMillisecondsSinceEpoch(examStartDate * 1000);
+          dstart = DateFormat('d MMM,yyyy  h:mm a').format(dt1);
+          examEndDate = int.parse(data["ending_time"]);
+          dt1 = DateTime.fromMillisecondsSinceEpoch(examEndDate * 1000);
+          dend = DateFormat('d MMM,yyyy  h:mm a').format(dt2);
           Exam examsdemo = Exam(
             id: data["id"],
             name: data["name"],
             examType: data["exam_type"],
             subjectId: data["subject_id"],
             subjectName: data["subject_name"],
-            startingTime: data["starting_time"],
-            endingTime: data["ending_time"],
+            startingTime: dstart,
+            endingTime: dend,
             totalMarks: data["total_marks"],
             status: data["status"],
           );
@@ -267,7 +286,7 @@ class _ExamsPageState extends State<ExamsPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10,top: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.68,
                 child: ListView.builder(
@@ -324,7 +343,7 @@ class _ExamsPageState extends State<ExamsPage> {
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Spacer(),
-                                    Text(
+                                      Text(
                                       "${examsDataDemo[index].status}",
                                       style: GoogleFonts.poppins(
                                           fontSize: 14,

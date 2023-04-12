@@ -67,8 +67,7 @@ class _IssueBookPageState extends State<IssueBookPage> {
       for (var data in issuebook["issued_books"]) {
           issuedate = int.parse( data['issue_date']);
           dt = DateTime.fromMillisecondsSinceEpoch(issuedate * 1000);
-          d12 = DateFormat('dd/MM/yyyy, hh:mm a').format(dt);
-          print(d12);
+          d12 = DateFormat('d MMM,yyyy  h:mm a').format(dt);
         IssuedBook issuebookdemo = IssuedBook(
           id: data['id'],
           bookId: data['book_id'],
@@ -79,14 +78,6 @@ class _IssueBookPageState extends State<IssueBookPage> {
         );
         setState(() {
           issuebookDataDemo.add(issuebookdemo);
-// issuedate = int.parse( data['issue_date']);
-//           dt = DateTime.fromMillisecondsSinceEpoch(issuedate * 1000);
-//           d12 = DateFormat('dd/MM/yyyy, hh:mm a').format(dt);
-//           print(d12);
-          
-          //  var date = DateTime.fromMicrosecondsSinceEpoch(data['issue_date']);//convert datetime to day
-          // String datetime = date.year.toString() + "/" + date.month.toString() + "/" + date.day.toString();
-          // print(datetime);
         });
       }
     }
@@ -174,17 +165,17 @@ class _IssueBookPageState extends State<IssueBookPage> {
               clipper: MyCustomClipper(),
             ),
 
-           Padding(
-             padding: const EdgeInsets.only(left: 50,right: 50),
-             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-              Text(_dateTime.toString().split(" ")[0]),
-              Text(_dateTime2.toString().split(" ")[0]),
-              ],
-             ),
-           ),
-            
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Start Day",style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w500),),
+                  Text("End Day",style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w500),),//_dateTime2.toString().split(" ")[0]
+                ],
+              ),
+            ),
+          
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.06,
@@ -192,54 +183,44 @@ class _IssueBookPageState extends State<IssueBookPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 40, right: 10, top: 5),
+                    padding: const EdgeInsets.only(left: 20, top: 5),
                     child: InkWell(
                       onTap: _showDatePicker,
-                      //  () {
-                      //   TableCalendar(
-                      //     locale: "en_US",
-                      //     rowHeight: 40,
-                      //     headerStyle: HeaderStyle(formatButtonVisible: false,titleCentered: true),
-                      //     focusedDay: today,
-                      //      firstDay: DateTime.utc(2000,01,01),
-                      //       lastDay: DateTime.utc(2035,12,31),
-                      //   );
-      
-                      // },
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: 90,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: Color(0XFFE7F5FE),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Center(
                             child: Text(
-                          "Start Day",
+                          DateFormat('d MMM,yyyy').format(_dateTime),
                           style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                               color: Color(0XFF00A2FE)),
                         )),
                       ),
                     ),
                   ),
+                  Spacer(),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 40, top: 5),
+                    padding: const EdgeInsets.only(top: 5, right: 20),
                     child: InkWell(
                       onTap: _showDatePicker2,
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: 90,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: Color(0XFFE7F5FE),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Center(
                             child: Text(
-                          "End Day",
+                          DateFormat('d MMM,yyyy').format(_dateTime2),
                           style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                               color: Color(0XFF00A2FE)),
                         )),
@@ -249,10 +230,13 @@ class _IssueBookPageState extends State<IssueBookPage> {
                 ],
               ),
             ),
+            
             Padding(
-              padding: const EdgeInsets.only(top: 10, right: 15),
+              padding: const EdgeInsets.only(top: 10,left: 10),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+
+                },
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.06,
                   child: Container(
@@ -278,7 +262,7 @@ class _IssueBookPageState extends State<IssueBookPage> {
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.62,
+                height: MediaQuery.of(context).size.height * 0.61,
                 child: ListView.builder(
                   itemCount: issuebookDataDemo.length,
                   shrinkWrap: true,
@@ -287,7 +271,7 @@ class _IssueBookPageState extends State<IssueBookPage> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.225,
+                        height: MediaQuery.of(context).size.height * 0.215,
                         child: Card(
                           child: Column(
                             children: [
@@ -375,14 +359,7 @@ class _IssueBookPageState extends State<IssueBookPage> {
                                       ),
                                     ),
                                     Spacer(),
-                                    // Text(
-                                    //   "The Chrismas Pig",
-                                    //   style: GoogleFonts.poppins(
-                                    //       fontSize: 15,
-                                    //       fontWeight: FontWeight.w400),
-                                    // ),
-      
-                                    Container(
+                              issuebookDataDemo[index].status=="pending" ? Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.21,
                                       height: MediaQuery.of(context).size.height *
@@ -398,6 +375,22 @@ class _IssueBookPageState extends State<IssueBookPage> {
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w700,
                                                   color: Color(0XFFFED546)))),
+                                    ):Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.21,
+                                      height: MediaQuery.of(context).size.height *
+                                          0.045,
+                                      decoration: BoxDecoration(
+                                        color: Color.fromARGB(255, 214, 247, 214),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                              "${issuebookDataDemo[index].status}",
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Color.fromARGB(255, 57, 175, 57)))),
                                     ),
                                   ],
                                 ),

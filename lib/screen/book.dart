@@ -90,6 +90,12 @@ class _BookPageState extends State<BookPage> {
           .where((element) =>
               element.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
+          
+      // filteredBook = bookDataDemo
+      //     .where((element) =>
+      //         element.author.toLowerCase().contains(value.toLowerCase()))
+      //     .toList();
+          
     });
   }
 

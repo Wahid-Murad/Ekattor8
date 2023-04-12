@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,10 @@ class _FeePageState extends State<FeePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   //  WebViewController webViewController = WebViewController();
   var fee;
+  var issueDate;
+  var dt;
+  var dissue;
+
   String? selectedValue;
   SharedPreferences? sharedPreferences;
   DateTime _dateTime = DateTime.now();
@@ -56,7 +61,6 @@ class _FeePageState extends State<FeePage> {
         schoolId: fee['school_id'],
         sessionId: fee['session_id'],
         invoices: [],
-        // examMarks: [],
       );
       setState(() {
         feeData.add(feeModel);
@@ -64,14 +68,17 @@ class _FeePageState extends State<FeePage> {
 
       for (var data in fee["invoices"]) {
         if (selectedValue == null) {
+          issueDate = int.parse(data["timestamp"]);
+          dt = DateTime.fromMillisecondsSinceEpoch(issueDate * 1000);
+          dissue = DateFormat('d MMM,yyyy').format(dt);
           Invoice feedemo = Invoice(
             id: data["id"],
             title: data["title"],
             totalAmount: data["total_amount"],
             paymentMethod: data["payment_method"],
             paidAmount: data["paid_amount"],
-            status: data["status"],
-            timestamp: data["timestamp"],
+            status: data["status"] ,
+            timestamp: dissue,
           );
 
           setState(() {
@@ -80,6 +87,9 @@ class _FeePageState extends State<FeePage> {
         }
 
         if (data["status"] == selectedValue) {
+          issueDate = int.parse(data["timestamp"]);
+          dt = DateTime.fromMillisecondsSinceEpoch(issueDate * 1000);
+          dissue = DateFormat('d MMM,yyyy').format(dt);
           Invoice feedemo = Invoice(
             id: data["id"],
             title: data["title"],
@@ -87,7 +97,7 @@ class _FeePageState extends State<FeePage> {
             paymentMethod: data["payment_method"],
             paidAmount: data["paid_amount"],
             status: data["status"],
-            timestamp: data["timestamp"],
+            timestamp: dissue,
           );
           setState(() {
             feeDataDemo.add(feedemo);
@@ -125,19 +135,14 @@ class _FeePageState extends State<FeePage> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020, 01, 01),
-      lastDate: DateTime(2035, 12, 31),
+      firstDate: DateTime(2000, 01, 01),
+      lastDate: DateTime(2050, 12, 31),
     ).then((value) {
       setState(() {
         _dateTime2 = value!;
       });
     });
   }
-
-  
-
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -186,16 +191,18 @@ class _FeePageState extends State<FeePage> {
               ),
               clipper: MyCustomClipper(),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 50, right: 50),
+
+             Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(_dateTime.toString().split(" ")[0]),
-                  Text(_dateTime2.toString().split(" ")[0]),
+                  Text("Start Day",style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w500),),
+                  Text("End Day",style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w500),),//_dateTime2.toString().split(" ")[0]
                 ],
               ),
             ),
+          
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.06,
@@ -203,21 +210,21 @@ class _FeePageState extends State<FeePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only( left: 20,right: 20, top: 5),
+                    padding: const EdgeInsets.only(left: 20, top: 5),
                     child: InkWell(
                       onTap: _showDatePicker,
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: 90,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: Color(0XFFE7F5FE),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Center(
                             child: Text(
-                          "Start Day",
+                          DateFormat('d MMM,yyyy').format(_dateTime),
                           style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                               color: Color(0XFF00A2FE)),
                         )),
@@ -226,21 +233,21 @@ class _FeePageState extends State<FeePage> {
                   ),
                   Spacer(),
                   Padding(
-                    padding: const EdgeInsets.only( top: 5,right: 20),
+                    padding: const EdgeInsets.only(top: 5, right: 20),
                     child: InkWell(
                       onTap: _showDatePicker2,
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: 90,
+                        height: 35,
                         decoration: BoxDecoration(
                           color: Color(0XFFE7F5FE),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Center(
                             child: Text(
-                          "End Day",
+                          DateFormat('d MMM,yyyy').format(_dateTime2),
                           style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                               color: Color(0XFF00A2FE)),
                         )),
@@ -250,13 +257,15 @@ class _FeePageState extends State<FeePage> {
                 ],
               ),
             ),
+            
             Row(
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
                   child: DropdownButtonHideUnderline(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 20,right: 20),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 20, right: 20),
                       child: DropdownButton2(
                         isExpanded: true,
                         hint: Row(
@@ -357,11 +366,9 @@ class _FeePageState extends State<FeePage> {
                 ),
                 Spacer(),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10,right: 20),
+                  padding: const EdgeInsets.only(top: 10, right: 20),
                   child: InkWell(
-                    onTap: () {
-                      
-                    },
+                    onTap: () {},
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.06,
                       child: Container(
@@ -385,10 +392,11 @@ class _FeePageState extends State<FeePage> {
                 ),
               ],
             ),
+           
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.62,
+                height: MediaQuery.of(context).size.height * 0.61,
                 child: ListView.builder(
                   itemCount: feeDataDemo.length,
                   shrinkWrap: true,
@@ -397,7 +405,7 @@ class _FeePageState extends State<FeePage> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.33,
+                        height: MediaQuery.of(context).size.height * 0.297,
                         child: Card(
                           child: Column(
                             children: [
@@ -510,11 +518,11 @@ class _FeePageState extends State<FeePage> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.21,
+                                                0.22,
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.045,
+                                                0.050,
                                             decoration: BoxDecoration(
                                               color: Color(0XFFFEE4EB),
                                               borderRadius:
@@ -524,7 +532,7 @@ class _FeePageState extends State<FeePage> {
                                               child: Text(
                                                 "${feeDataDemo[index].status}",
                                                 style: GoogleFonts.poppins(
-                                                    fontSize: 13,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w700,
                                                     color: Color(0XFFF2547B)),
                                               ),
@@ -534,11 +542,11 @@ class _FeePageState extends State<FeePage> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.21,
+                                                0.22,
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.045,
+                                                0.050,
                                             decoration: BoxDecoration(
                                               color: Color(0XFFDAFEEB),
                                               borderRadius:
@@ -548,7 +556,7 @@ class _FeePageState extends State<FeePage> {
                                               child: Text(
                                                 "${feeDataDemo[index].status}",
                                                 style: GoogleFonts.poppins(
-                                                    fontSize: 13,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w700,
                                                     color: Color(0XFF3DC57B)),
                                               ),
@@ -558,36 +566,27 @@ class _FeePageState extends State<FeePage> {
                                 ),
                               ),
 
-                              // Text(
-                              //       "${feeDataDemo[index].status}",
-                              //       style: GoogleFonts.poppins(
-                              //           fontSize: 14,
-                              //           fontWeight: FontWeight.w500,
-                              //           color: Color(0XFF7C7F8D)),
+                              // InkWell(
+                              //   // onTap: _showWebView,
+                              //   onTap: () {},
+                              //   child: Container(
+                              //     width: 80,
+                              //     height: 25,
+                              //     decoration: BoxDecoration(
+                              //       color: Color(0XFFE7F5FE),
+                              //       borderRadius: BorderRadius.circular(5),
                               //     ),
-
-                          InkWell(
-                            // onTap: _showWebView,
-                            onTap: () {
-                              
-                            },
-                            child: Container(
-                                                  width: 80,
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
-                            color: Color(0XFFE7F5FE),
-                            borderRadius: BorderRadius.circular(5),
-                                                  ),
-                                                  child: Center(
-                              child: Text(
-                            "Invoice",
-                            style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0XFF00A2FE)),
-                                                  )),
-                                                ),
-                          ),
+                              //     child: Center(
+                              //         child: Text(
+                              //       "Invoice",
+                              //       style: GoogleFonts.poppins(
+                              //           fontSize: 16,
+                              //           fontWeight: FontWeight.w500,
+                              //           color: Color(0XFF00A2FE)),
+                              //     )),
+                              //   ),
+                              // ),
+                            
                             ],
                           ),
                         ),

@@ -176,8 +176,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     // request.files.add(http.MultipartFile(
     //     'photo', image!.readAsBytes().asStream(), image!.lengthSync(),
-    //     ));
-       // filename: basename(image!.path)
+    //     )
+    // );
+    //    filename: basename(image!.path);
     
     var response = await request.send();
     print("${response.statusCode}");

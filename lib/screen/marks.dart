@@ -23,6 +23,8 @@ class MarksPage extends StatefulWidget {
 class _MarksPageState extends State<MarksPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var marks;
+  var subject;
+  var category;
   dynamic totalMark = 0;
   dynamic averageMark;
   // dynamic parcentValue=100;
@@ -30,7 +32,10 @@ class _MarksPageState extends State<MarksPage> {
   SharedPreferences? sharedPreferences;
 
   List<MarksModel> marksData = [];
-  List<ExamMark> marksDataDemo = [];
+  List<ExamMark> examMarkData = [];
+  List<ExamCategory> examCategoryData = [];
+  List<Subject> marksDataDemo = [];
+  // List<ExamMark> marksDataDemo = [];
 
   fetchMarks() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -57,58 +62,59 @@ class _MarksPageState extends State<MarksPage> {
         schoolId: marks['school_id'],
         sessionId: marks['session_id'],
         examMarks: [],
+        examCategories: [],
       );
       setState(() {
         marksData.add(marksModel);
       });
 
-      for (var data in marks["exam_marks"]) {
+      for (var examcategory in marks["exam_categories"]) {
         if (selectedValue == null) {
-          ExamMark marksdemo = ExamMark(
-            id: data["id"],
-            classId: data["class_id"],
-            sectionId: data["section_id"],
-            examCategoryId: data["exam_category_id"],
-            bangla: data["Bangla"],
-            english: data["English"],
-            drawing: data["Drawing"],
-            mathematics: data["Mathematics"],
-            comment: data["comment"],
+          ExamCategory examCategory = ExamCategory(
+            examCategoryId: examcategory['exam_category_id'],
+            examCategoryName: examcategory['exam_category_name'],
           );
-
           setState(() {
-            totalMark = ((double.parse(data["Bangla"]) +
-                        double.parse(data["English"])) /
-                    2) /
-                100;
-                averageMark=totalMark*100;
-            marksDataDemo.add(marksdemo);
+            examCategoryData.add(examCategory);
           });
         }
 
-        if (data["exam_category_id"] == selectedValue) {
-          ExamMark marksdemo = ExamMark(
-            id: data["id"],
-            classId: data["class_id"],
-            sectionId: data["section_id"],
-            examCategoryId: data["exam_category_id"],
-            bangla: data["Bangla"],
-            english: data["English"],
-            drawing: data["Drawing"],
-            mathematics: data["Mathematics"],
-            comment: data["comment"],
+        if (examcategory["exam_category_name"] == selectedValue) {
+          ExamCategory examCategory = ExamCategory(
+            examCategoryId: examcategory['exam_category_id'],
+            examCategoryName: examcategory['exam_category_name'],
           );
-
           setState(() {
-            totalMark = ((double.parse(data["Bangla"]) +
-                        double.parse(data["English"])) /
-                    2) /
-                100;
-                  averageMark=totalMark*100;
-            marksDataDemo.add(marksdemo);
+            examCategoryData.add(examCategory);
           });
         }
       }
+
+      for (var exammark in marks["exam_marks"]) {
+        ExamMark exammarksdemo = ExamMark(
+          examId: exammark['exam_id'],
+          examCategoryId: exammark['exam_category_id'],
+          comment: exammark['comment'],
+          subjects: [],
+        );
+        setState(() {
+          examMarkData.add(exammarksdemo);
+        });
+      }
+
+      for (var data in marks["subjects"]) {
+        Subject marksdemo = Subject(
+          subjectId: data['subject_id'],
+          subjectName: data['subject_name'],
+          marks: data['marks'],
+        );
+        setState(() {
+          // totalMark = ((double.parse(data["marks"]))/4)/100;
+          // averageMark=totalMark*100;
+          marksDataDemo.add(marksdemo);
+        });
+      }
+
     }
   }
 
@@ -118,14 +124,11 @@ class _MarksPageState extends State<MarksPage> {
     super.initState();
   }
 
-  static var examCategoryId = [
-    '1',
-    '2',
-    '3',
-    '4',
-    // 'Physics',
-    // 'GK',
-    // 'Chemistry',
+  static var examCategoryName = [
+    'Class test',
+    'Midterm exam',
+    'Final exam',
+    'Admission exam',
   ];
 
   @override
@@ -175,7 +178,6 @@ class _MarksPageState extends State<MarksPage> {
               ),
               clipper: MyCustomClipper(),
             ),
-
             Align(
               alignment: Alignment.centerLeft,
               child: DropdownButtonHideUnderline(
@@ -203,7 +205,7 @@ class _MarksPageState extends State<MarksPage> {
                         ),
                       ],
                     ),
-                    items: examCategoryId
+                    items: examCategoryName
                         .map((item) => DropdownMenuItem<String>(
                               value: item,
                               child: Center(
@@ -279,7 +281,6 @@ class _MarksPageState extends State<MarksPage> {
                 ),
               ),
             ),
-           
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Container(
@@ -324,8 +325,8 @@ class _MarksPageState extends State<MarksPage> {
                               0.082, //0.55,
                           child: ListView.builder(
                             itemCount: marksDataDemo.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            //shrinkWrap: true,
+                           // physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.only(
@@ -347,14 +348,14 @@ class _MarksPageState extends State<MarksPage> {
                                         ),
                                         // Spacer(),
                                         Text(
-                                          "${marksDataDemo[index].bangla}",
+                                          "${marksDataDemo[index].subjectName}",
                                           style: GoogleFonts.poppins(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: Color(0XFF7C7F8D)),
                                         ),
                                         Text(
-                                          "${marksDataDemo[index].english}",
+                                          "${marksDataDemo[index].marks}",
                                           style: GoogleFonts.poppins(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
@@ -384,10 +385,10 @@ class _MarksPageState extends State<MarksPage> {
                 animation: true,
                 radius: 90,
                 lineWidth: 18,
-                percent: totalMark.toDouble(),
+                percent: 0.5, //totalMark.toDouble()
                 progressColor: Color(0XFF00A3FF),
                 circularStrokeCap: CircularStrokeCap.round,
-                center: Text("$averageMark%"),
+                center: Text("50%"), //$averageMark
               ),
             ),
           ],
