@@ -27,6 +27,8 @@ class _FeePageState extends State<FeePage> {
   var issueDate;
   var dt;
   var dissue;
+  var start;
+  var end;
 
   String? selectedValue;
   SharedPreferences? sharedPreferences;
@@ -110,6 +112,8 @@ class _FeePageState extends State<FeePage> {
   @override
   void initState() {
     fetchFee();
+    start = DateFormat('yyyy/MM/dd').format(_dateTime);
+    end = DateFormat('yyyy/MM/dd').format(_dateTime);
     super.initState();
   }
 
@@ -127,6 +131,8 @@ class _FeePageState extends State<FeePage> {
     ).then((value) {
       setState(() {
         _dateTime = value!;
+        start = DateFormat('yyyy/MM/dd').format(_dateTime);
+             print(start);
       });
     });
   }
@@ -140,9 +146,95 @@ class _FeePageState extends State<FeePage> {
     ).then((value) {
       setState(() {
         _dateTime2 = value!;
+        end = DateFormat('yyyy/MM/dd').format(_dateTime2);
+            print(end);
       });
     });
   }
+
+   filterFee() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    dynamic token = sharedPreferences!.getString("access_token");
+      String datesString = '${start}-${end}';
+
+      setState(() {
+        
+      });
+
+    print(token);
+    print("Date Range");
+    print(datesString);
+
+    var url = "https://demo.creativeitem.com/test/Ekattor8/api/fee_list";
+
+    final response = await http.post(Uri.parse(url), headers: {
+      // 'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    },body: {
+     'date_range': datesString,
+    },);
+
+    print(response.body);
+
+
+    if (response.statusCode == 201) {
+      print(response.body);
+      fee = jsonDecode(response.body);
+      FeeModel feeModel = FeeModel(
+        classId: fee['class_id'],
+        className: fee['class_name'],
+        sectionId: fee['section_id'],
+        sectionName: fee['section_name'],
+        schoolId: fee['school_id'],
+        sessionId: fee['session_id'],
+        invoices: [],
+      );
+      setState(() {
+        feeData.add(feeModel);
+      });
+
+      for (var data in fee["invoices"]) {
+        if (selectedValue == null) {
+          issueDate = int.parse(data["timestamp"]);
+          dt = DateTime.fromMillisecondsSinceEpoch(issueDate * 1000);
+          dissue = DateFormat('d MMM,yyyy').format(dt);
+          Invoice feedemo = Invoice(
+            id: data["id"],
+            title: data["title"],
+            totalAmount: data["total_amount"],
+            paymentMethod: data["payment_method"],
+            paidAmount: data["paid_amount"],
+            status: data["status"] ,
+            timestamp: dissue,
+          );
+
+          setState(() {
+            feeDataDemo.add(feedemo);
+          });
+        }
+
+        if (data["status"] == selectedValue) {
+          issueDate = int.parse(data["timestamp"]);
+          dt = DateTime.fromMillisecondsSinceEpoch(issueDate * 1000);
+          dissue = DateFormat('d MMM,yyyy').format(dt);
+          Invoice feedemo = Invoice(
+            id: data["id"],
+            title: data["title"],
+            totalAmount: data["total_amount"],
+            paymentMethod: data["payment_method"],
+            paidAmount: data["paid_amount"],
+            status: data["status"],
+            timestamp: dissue,
+          );
+          setState(() {
+            feeDataDemo.add(feedemo);
+          });
+        }
+      }
+    }
+    }
+
 
   @override
   Widget build(BuildContext context) {
@@ -368,7 +460,12 @@ class _FeePageState extends State<FeePage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, right: 20),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                       filterFee();
+                  feeDataDemo.clear();
+                  print(start);
+                  print(end);
+                    },
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.06,
                       child: Container(

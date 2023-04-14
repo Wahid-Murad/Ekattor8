@@ -77,7 +77,7 @@ class _DemoDrawerState extends State<DemoDrawer> {
           role: user["role"],
           address: user["address"],
           phone: user["phone"],
-          birthday: user["birthday"],
+          // birthday: user["birthday"],
           gender: user["gender"],
           bloodGroup: user["blood_group"],
           photo: user["photo"],

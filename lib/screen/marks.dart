@@ -23,11 +23,11 @@ class MarksPage extends StatefulWidget {
 class _MarksPageState extends State<MarksPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var marks;
-  var subject;
-  var category;
+  var count = 0;
+  var examcategory;
   dynamic totalMark = 0;
-  dynamic averageMark;
-  // dynamic parcentValue=100;
+  dynamic averageMark = 0;
+  String averageMarkString="0";
   String? selectedValue;
   SharedPreferences? sharedPreferences;
 
@@ -35,7 +35,6 @@ class _MarksPageState extends State<MarksPage> {
   List<ExamMark> examMarkData = [];
   List<ExamCategory> examCategoryData = [];
   List<Subject> marksDataDemo = [];
-  // List<ExamMark> marksDataDemo = [];
 
   fetchMarks() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -68,28 +67,6 @@ class _MarksPageState extends State<MarksPage> {
         marksData.add(marksModel);
       });
 
-      for (var examcategory in marks["exam_categories"]) {
-        if (selectedValue == null) {
-          ExamCategory examCategory = ExamCategory(
-            examCategoryId: examcategory['exam_category_id'],
-            examCategoryName: examcategory['exam_category_name'],
-          );
-          setState(() {
-            examCategoryData.add(examCategory);
-          });
-        }
-
-        if (examcategory["exam_category_name"] == selectedValue) {
-          ExamCategory examCategory = ExamCategory(
-            examCategoryId: examcategory['exam_category_id'],
-            examCategoryName: examcategory['exam_category_name'],
-          );
-          setState(() {
-            examCategoryData.add(examCategory);
-          });
-        }
-      }
-
       for (var exammark in marks["exam_marks"]) {
         ExamMark exammarksdemo = ExamMark(
           examId: exammark['exam_id'],
@@ -101,20 +78,39 @@ class _MarksPageState extends State<MarksPage> {
           examMarkData.add(exammarksdemo);
         });
       }
-
-      for (var data in marks["subjects"]) {
-        Subject marksdemo = Subject(
-          subjectId: data['subject_id'],
-          subjectName: data['subject_name'],
-          marks: data['marks'],
+        for (examcategory in marks["exam_categories"]) {
+        ExamCategory examCategory = ExamCategory(
+          examCategoryId: examcategory['exam_category_id'],
+          examCategoryName: examcategory['exam_category_name'],
         );
         setState(() {
-          // totalMark = ((double.parse(data["marks"]))/4)/100;
-          // averageMark=totalMark*100;
-          marksDataDemo.add(marksdemo);
+          examCategoryData.add(examCategory);
         });
       }
 
+      
+      for (var exammarks in marks["exam_marks"]) {
+        totalMark=0;
+        count=0;
+        for (var data in exammarks["subjects"]) {
+          if(exammarks['exam_category_id']==selectedValue){
+            Subject marksdemo = Subject(
+            subjectId: data['subject_id'],
+            subjectName: data['subject_name'],
+            marks: data['marks'],
+          );
+          setState(() {
+            count++;
+            marksDataDemo.add(marksdemo);
+          });
+          totalMark = totalMark + (double.parse(data["marks"]));
+          averageMark = (totalMark / count);
+          averageMarkString = averageMark.toStringAsFixed(0);
+          print(totalMark);
+          print(averageMark);
+        }
+      }
+          }
     }
   }
 
@@ -125,10 +121,8 @@ class _MarksPageState extends State<MarksPage> {
   }
 
   static var examCategoryName = [
-    'Class test',
-    'Midterm exam',
-    'Final exam',
-    'Admission exam',
+    '1',
+    '2',
   ];
 
   @override
@@ -325,8 +319,8 @@ class _MarksPageState extends State<MarksPage> {
                               0.082, //0.55,
                           child: ListView.builder(
                             itemCount: marksDataDemo.length,
-                            //shrinkWrap: true,
-                           // physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.only(
@@ -340,7 +334,7 @@ class _MarksPageState extends State<MarksPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "${marksData[index].className}",
+                                          "${marks['class_name']}",
                                           style: GoogleFonts.poppins(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
@@ -380,15 +374,16 @@ class _MarksPageState extends State<MarksPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10,bottom: 10),
               child: CircularPercentIndicator(
                 animation: true,
                 radius: 90,
                 lineWidth: 18,
-                percent: 0.5, //totalMark.toDouble()
+                percent: (averageMark.toDouble() / 100),
                 progressColor: Color(0XFF00A3FF),
                 circularStrokeCap: CircularStrokeCap.round,
-                center: Text("50%"), //$averageMark
+                center: Text("$averageMarkString %"),
+                // center: Text(averageMark), //$averageMark
               ),
             ),
           ],

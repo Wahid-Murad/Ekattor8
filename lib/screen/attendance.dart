@@ -34,10 +34,6 @@ class _AttendancePageState extends State<AttendancePage> {
 
   var currentMonth=DateFormat.MMMM().format(DateTime.now());
 
-  // var now = DateTime.now();
-  // var current_mon =now.month;
-//    var month = DateTime.now();
-//  final formatted = formatDate(month, [mm]);
 
   List<AttendanceModel> attendanceData = [];
   List<Attendance> attendanceDataDemo = [];
@@ -47,6 +43,7 @@ class _AttendancePageState extends State<AttendancePage> {
     dynamic token = sharedPreferences!.getString("access_token");
 
     print(token);
+     print(currentMonth);
 
     var url = "https://demo.creativeitem.com/test/Ekattor8/api/attendance";
 
@@ -73,14 +70,14 @@ class _AttendancePageState extends State<AttendancePage> {
       });
 
       for (var data in attendance["attedances"]) {
-        attendanceDate = int.parse(data["timestamp"]);
+        attendanceDate = int.parse(data["timestamp"]);//DateTime.parse(item['date']).month == now.month).toList()
           dt = DateTime.fromMillisecondsSinceEpoch(attendanceDate * 1000);
           //d12 = DateFormat('dd/MM/yyyy, hh:mm a').format(dt);
           d12 = DateFormat('EEEE').format(dt);
           month=DateFormat.MMMM().format(dt);
           print(month);
           // print(currentMonth);
-          if(selectedValue==null){
+          if(selectedValue==null && DateFormat.MMMM().format(dt)==currentMonth){
              Attendance attendancedemo = Attendance(
           id: data["id"],
           status: data["status"],
@@ -90,7 +87,7 @@ class _AttendancePageState extends State<AttendancePage> {
           attendanceDataDemo.add(attendancedemo);
         });
           }
-          if(selectedValue==month){
+          if(DateFormat.MMMM().format(dt)==selectedValue){//data["timestamp"])
              Attendance attendancedemo = Attendance(
           id: data["id"],
           status: data["status"],
@@ -101,8 +98,8 @@ class _AttendancePageState extends State<AttendancePage> {
         });
           }
       }
-      lastIndex=attendanceDataDemo.length;
-          print(lastIndex);
+      // lastIndex=attendanceDataDemo.length;
+          print(attendanceDataDemo.length);
     }
   }
 
@@ -287,7 +284,9 @@ class _AttendancePageState extends State<AttendancePage> {
         onChanged: (value) {
           setState(() {
             selectedValue = value as String;
+            attendanceDataDemo.clear();
           });
+           fetchAttendance();
         },
         icon: const Icon(
           Icons.keyboard_arrow_down_outlined,

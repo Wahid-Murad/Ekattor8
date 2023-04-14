@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,6 +24,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var user;
+  // var birthday;
   bool _rememberMe = false;
   SharedPreferences? sharedPreferences;
 
@@ -104,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
           role: user["role"],
           address: user["address"],
           phone: user["phone"],
-          birthday: user["birthday"],
+          //  birthday: user["birthday"],
           gender: user["gender"],
           bloodGroup: user["blood_group"],
           photo: user["photo"],
@@ -113,6 +115,8 @@ class _ProfilePageState extends State<ProfilePage> {
           sectionName: user["section_name"]);
       setState(() {
         userData.add(userDetailsModel);
+        //print(user["birthday"]);
+        // birthday= DateFormat('yyyy/MM/dd').format(user["birthday"]);
       });
     }
   }
@@ -123,86 +127,149 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
   }
 
-  File? image; //profile update
-  final picker = ImagePicker();
+  // File? image; //profile update
+  // final picker = ImagePicker();
 
-  Future getImageformGallery() async {
-    print('on the way of gallery');
-    // ignore: deprecated_member_use
-    final pickedImage = await picker.getImage(source: ImageSource.camera);
-     imageQuality: 25;
-    setState(() {
-      if (pickedImage != null) {
-        image = File(pickedImage.path);
-        print('Image found');
-        print('$image');
-      } else {
-        print('No image found');
-      }
-    });
-  }
+  // Future getImageformGallery() async {
+  //   print('on the way of gallery');
+  //   // ignore: deprecated_member_use
+  //   final pickedImage = await picker.getImage(source: ImageSource.camera);
+  //    imageQuality: 25;
+  //   setState(() {
+  //     if (pickedImage != null) {
+  //       image = File(pickedImage.path);
+  //       print('Image found');
+  //       print('$image');
+  //     } else {
+  //       print('No image found');
+  //     }
+  //   });
+  // }
 
-  Future saveChanges() async {
-    setState(() {
-      // onProgress = true;
-    });
-    final uri = Uri.parse(
-        "https://demo.creativeitem.com/test/Ekattor8/api/profile_update");
-    var request = http.MultipartRequest("POST", uri);
-    // request.headers.addAll(
-    //   await CustomHttpRequest().getHeaderWithToken(),
-    // );
-    request.fields['name'] = nameController.text.toString();
-    request.fields['email'] = emailController.text.toString();
-    request.fields['phone'] = phoneNumberController.text.toString();
-    request.fields['address'] = addressController.text.toString();
-    request.fields['gender']=user['gender'];
-    request.fields['birthday']=user['birthday'].toString();
-   request.fields['blood_group']="B+";
+  // Future saveChanges() async {
+  //   setState(() {
+  //     // onProgress = true;
+  //   });
+  //   final uri = Uri.parse(
+  //       "https://demo.creativeitem.com/test/Ekattor8/api/profile_update");
+  //   var request = http.MultipartRequest("POST", uri);
+  //   // request.headers.addAll(
+  //   //   await CustomHttpRequest().getHeaderWithToken(),
+  //   // );
+  //   request.fields['name'] = nameController.text.toString();
+  //   request.fields['email'] = emailController.text.toString();
+  //   request.fields['phone'] = phoneNumberController.text.toString();
+  //   request.fields['address'] = addressController.text.toString();
+  //   request.fields['gender']=user['gender'];
+  //   request.fields['birthday']=user['birthday'].toString();
+  // //  request.fields['blood_group']="B+";
   
-  print(nameController.text.toString());
-  print(emailController.text.toString());
-  print(phoneNumberController.text.toString());
-  print(addressController.text.toString());
-  print(user['gender']);
-  print(user['birthday']);
-  print("B+");
-  
-    // if (image != null) {
-    //   var photo = await http.MultipartFile.fromPath('image', image!.path);
-    //   print('processing');
-    //   request.files.add(photo);
-    // }
+  // print(nameController.text.toString());
+  // print(emailController.text.toString());
+  // print(phoneNumberController.text.toString());
+  // print(addressController.text.toString());
+  // print(user['gender']);
+  // print(user['birthday']);
+  // // print("B+");
+  // // print(response.body);
+  //   // if (image != null) {
+  //   //   var photo = await http.MultipartFile.fromPath('image', image!.path);
+  //   //   print('processing');
+  //   //   request.files.add(photo);
+  //   // }
 
-    // request.files.add(http.MultipartFile(
-    //     'photo', image!.readAsBytes().asStream(), image!.lengthSync(),
-    //     )
-    // );
-    //    filename: basename(image!.path);
+  //   // request.files.add(http.MultipartFile(
+  //   //     'photo', image!.readAsBytes().asStream(), image!.lengthSync(),
+  //   //     )
+  //   // );
+  //   //    filename: basename(image!.path);
     
-    var response = await request.send();
-    print("${response.statusCode}");
+  //   var response = await request.send();
+  //   print("${response.statusCode}");
 
-    var responseData = await response.stream.toBytes();
-    var responseString = String.fromCharCodes(responseData);
-    var data = jsonDecode(responseString);
+  //   var responseData = await response.stream.toBytes();
+  //   var responseString = String.fromCharCodes(responseData);
+  //   // var data = jsonDecode(responseString);
 
-    if (response.statusCode == 201) {
-      print("responseBody1 $responseData");
-      print(data['message']);
-      // showInToast(data['message']);
-      // Provider.of<CategoryProvider>(context, listen: false).getCategory();
-      Navigator.pop(context);
-      print("${response.statusCode}");
-    } else {
-      print("responseBody1 $responseString");
-      print(data['errors']['image'][0]);
-      // showInToast(data["errors"]['image'][0]);
-      // setState(() {
-      //   onProgress = false;
-      // });
+  //   if (response.statusCode == 201) {
+  //     print("responseBody1 $responseData");
+  //     // print(data['message']);
+  //     // showInToast(data['message']);
+  //     // Provider.of<CategoryProvider>(context, listen: false).getCategory();
+  //     // Navigator.pop(context);
+  //     print("${response.statusCode}");
+  //   } else {
+  //     print("responseBody1 $responseString");
+  //     // print(data['errors']['image'][0]);
+  //     // showInToast(data["errors"]['image'][0]);
+  //     // setState(() {
+  //     //   onProgress = false;
+  //     // });
+  //   }
+  // }
+
+
+   saveChanges() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    dynamic token = sharedPreferences!.getString("access_token");
+      // String datesString = '${start}-${end}';
+      //  String birthdayString = '$birthday';
+
+    print(token);
+    print("Date Range");
+    // print(datesString);
+
+    var url = "https://demo.creativeitem.com/test/Ekattor8/api/profile_update";
+
+    final response = await http.post(Uri.parse(url), headers: {
+      // 'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    },body: {
+     'name': nameController.text.toString(),
+     'email': emailController.text.toString(),
+     'phone': phoneNumberController.text.toString(),
+     'address': addressController.text.toString(),
+     'gender': user['gender'].toString(),
+    //  'birthday': user['birthday'].toString(),
+    },);
+
+    print(response.body);
+
+    // if (response.statusCode == 201) {
+    //   print(response.body);
+    //   issuebook = jsonDecode(response.body);
+    //   IssueBookModel issuebookModel = IssueBookModel(
+    //     classId: issuebook['class_id'],
+    //     className: issuebook['class_name'],
+    //     sectionId: issuebook['section_id'],
+    //     sectionName: issuebook['section_name'],
+    //     schoolId: issuebook['school_id'],
+    //     sessionId: issuebook['session_id'],
+    //     issuedBooks: [],
+    //   );
+    //   setState(() {
+    //     issuebookData.add(issuebookModel);
+    //   });
+
+    //   for (var data in issuebook["issued_books"]) {
+    //       issuedate = int.parse( data['issue_date']);
+    //       dt = DateTime.fromMillisecondsSinceEpoch(issuedate * 1000);
+    //       d12 = DateFormat('d MMM,yyyy  h:mm a').format(dt);
+    //     IssuedBook issuebookdemo = IssuedBook(
+    //       id: data['id'],
+    //       bookId: data['book_id'],
+    //       bookName: data['book_name'],
+    //       author: data['author'],
+    //       issueDate: d12,
+    //       status: data['status'],
+    //     );
+    //     setState(() {
+    //       issuebookDataDemo.add(issuebookdemo);
+    //     });
+    //   }
+    // }
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           left: 100,
                           child: Padding(
                             //${user['name']}
-                            padding: const EdgeInsets.only(left: 28, top: 5),
+                            padding: const EdgeInsets.only(top: 5,left: 45),
                             child: Center(
                                 child: Text(
                               "${user['name']}",
@@ -292,7 +359,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           top: 225,
                           left: 140,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 18, top: 3),
+                            padding: const EdgeInsets.only(left: 18, top: 5),
                             child: Center(
                                 child: Text(
                               "Class ${user['class_name']}",
@@ -383,7 +450,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.black12,
                             child: InkWell(
                               onTap: () {
-                                getImageformGallery();
+                                // getImageformGallery();
                              
                               },
                             child: Container(
@@ -392,7 +459,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                 ),
-                                child: image==null ? Column(
+                                child: Column(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(top: 60),
@@ -408,14 +475,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ],
-                                ):Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: FileImage(image!),
-                          ),),
-                          child: Icon(Icons.image),
-                        ),
+                                )
                               ),
                             ),
                           ),
@@ -1111,7 +1171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: const EdgeInsets.only(right: 20, bottom: 20),
                           child: InkWell(
                             onTap: () {
-                              saveChanges();
+                             saveChanges();
                             },
                             child: Container(
                               alignment: Alignment.centerLeft,

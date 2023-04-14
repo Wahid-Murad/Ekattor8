@@ -27,6 +27,8 @@ class _IssueBookPageState extends State<IssueBookPage> {
   var issuedate;
   var dt;
   var d12;
+  var start;
+  var end;
   DateTime _dateTime=DateTime.now();
   DateTime _dateTime2=DateTime.now();
   SharedPreferences? sharedPreferences;
@@ -86,6 +88,8 @@ class _IssueBookPageState extends State<IssueBookPage> {
   @override
   void initState() {
     fetchIssueBook();
+    start = DateFormat('yyyy/MM/dd').format(_dateTime);
+    end = DateFormat('yyyy/MM/dd').format(_dateTime);
     super.initState();
   }
 
@@ -100,6 +104,8 @@ class _IssueBookPageState extends State<IssueBookPage> {
         ).then((value){
           setState(() {
             _dateTime=value!;
+             start = DateFormat('yyyy/MM/dd').format(_dateTime);
+             print(start);
           });
         });
   }
@@ -113,9 +119,74 @@ class _IssueBookPageState extends State<IssueBookPage> {
         ).then((value){
           setState(() {
             _dateTime2=value!;
+            end = DateFormat('yyyy/MM/dd').format(_dateTime2);
+            print(end);
           });
         });
   }
+
+   filterIssueBook() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    dynamic token = sharedPreferences!.getString("access_token");
+      String datesString = '${start}-${end}';
+
+      setState(() {
+        
+      });
+
+    print(token);
+    print("Date Range");
+    print(datesString);
+
+    var url = "https://demo.creativeitem.com/test/Ekattor8/api/book_issue_list";
+
+    final response = await http.post(Uri.parse(url), headers: {
+      // 'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    },body: {
+     'date_range': datesString,
+    },);
+
+    print(response.body);
+
+    if (response.statusCode == 201) {
+      print(response.body);
+      issuebook = jsonDecode(response.body);
+      IssueBookModel issuebookModel = IssueBookModel(
+        classId: issuebook['class_id'],
+        className: issuebook['class_name'],
+        sectionId: issuebook['section_id'],
+        sectionName: issuebook['section_name'],
+        schoolId: issuebook['school_id'],
+        sessionId: issuebook['session_id'],
+        issuedBooks: [],
+      );
+      setState(() {
+        issuebookData.add(issuebookModel);
+      });
+
+      for (var data in issuebook["issued_books"]) {
+          issuedate = int.parse( data['issue_date']);
+          dt = DateTime.fromMillisecondsSinceEpoch(issuedate * 1000);
+          d12 = DateFormat('d MMM,yyyy  h:mm a').format(dt);
+        IssuedBook issuebookdemo = IssuedBook(
+          id: data['id'],
+          bookId: data['book_id'],
+          bookName: data['book_name'],
+          author: data['author'],
+          issueDate: d12,
+          status: data['status'],
+        );
+        setState(() {
+          issuebookDataDemo.add(issuebookdemo);
+        });
+      }
+    }
+    }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -234,9 +305,14 @@ class _IssueBookPageState extends State<IssueBookPage> {
             Padding(
               padding: const EdgeInsets.only(top: 10,left: 10),
               child: InkWell(
-                onTap: () {
+                onTap:() {
+                  filterIssueBook();
+                  issuebookDataDemo.clear();
+                  print(start);
+                  print(end);
 
                 },
+               
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.06,
                   child: Container(
@@ -266,7 +342,6 @@ class _IssueBookPageState extends State<IssueBookPage> {
                 child: ListView.builder(
                   itemCount: issuebookDataDemo.length,
                   shrinkWrap: true,
-                  //physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
@@ -315,6 +390,7 @@ class _IssueBookPageState extends State<IssueBookPage> {
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Spacer(),
+                                    
                                     // ts = issuebookDataDemo[index].issueDate;
                                     // DateTime tsdate = DateTime.fromMillisecondsSinceEpoch(issuebookDataDemo[index].issueDate);
                                     // String datetime = tsdate.year.toString() + "/" + tsdate.month.toString() + "/" + tsdate.day.toString();
